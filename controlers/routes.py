@@ -1,4 +1,4 @@
-from flask import render_template, Blueprint,request
+from flask import render_template, Blueprint, request
 import utils
 from datetime import datetime
 from flask import jsonify
@@ -23,12 +23,16 @@ def lista():
 @rotas.route("/oscilacao", methods=['POST'])
 def cadastra():
     data = {
-     "x":request.form.get("x"),
-     "y":request.form.get("y"),
-     "z":request.form.get("z"),
-     "lat":request.form.get("lat"),
-     "lng":request.form.get("lng"),
-     "datahora":(datetime.now()).isoformat()
+        "x": request.form.get("x"),
+        "y": request.form.get("y"),
+        "z": request.form.get("z"),
+        "lat": request.form.get("lat"),
+        "lng": request.form.get("lng"),
+        "datahora": (datetime.now()).isoformat()
     }
-    resultado = oscilacaoModel.addOscilacao(data)
-    return jsonify(resultado)
+    try:
+        resultado = oscilacaoModel.addOscilacao(data)
+        return jsonify(resultado)
+    except Exception as e:
+        print("erro", e)
+        return e
