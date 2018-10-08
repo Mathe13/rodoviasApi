@@ -22,17 +22,13 @@ def lista():
 
 @rotas.route("/oscilacao", methods=['POST'])
 def cadastra():
-    data = {
-        "x": request.form.get("x"),
-        "y": request.form.get("y"),
-        "z": request.form.get("z"),
-        "lat": request.form.get("lat"),
-        "lng": request.form.get("lng"),
-        "datahora": (datetime.now()).isoformat()
-    }
+    data = request.get_json(force=True)
+    data['datahora'] = (datetime.now()).isoformat()
+    print(data)
     try:
         resultado = oscilacaoModel.addOscilacao(data)
+        # print(resultado)
         return jsonify(resultado)
     except Exception as e:
-        print("erro", e)
-        return e
+        print("erro"+str(e))
+        return (str(e))
