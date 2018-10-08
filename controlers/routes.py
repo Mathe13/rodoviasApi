@@ -1,7 +1,10 @@
-from flask import render_template, Blueprint
-import json
+from flask import render_template, Blueprint,request
+import utils
+from datetime import datetime
+from flask import jsonify
+from models import oscilacaoModel
 rotas = Blueprint('rotas', __name__, static_folder="../static")
-
+rotas.json_encoder = utils.CustomJSONEncoder
 # index
 
 
@@ -12,9 +15,20 @@ def index():
 
 @rotas.route("/oscilacao", methods=['GET'])
 def lista():
-    return json.dumps({"a": "b"})
+    resultado = oscilacaoModel.listaOscilacao()
+    return(jsonify(resultado))
+    # return("a")
 
 
 @rotas.route("/oscilacao", methods=['POST'])
 def cadastra():
-    return "falta implementar"
+    data = {
+     "x":request.form.get("x"),
+     "y":request.form.get("y"),
+     "z":request.form.get("z"),
+     "lat":request.form.get("lat"),
+     "lng":request.form.get("lng"),
+     "datahora":(datetime.now()).isoformat()
+    }
+    resultado = oscilacaoModel.addOscilacao(data)
+    return jsonify(resultado)
