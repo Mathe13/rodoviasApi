@@ -5,12 +5,6 @@ from flask import jsonify
 from models import oscilacaoModel
 rotas = Blueprint('rotas', __name__, static_folder="../static")
 rotas.json_encoder = utils.CustomJSONEncoder
-# index
-
-
-@rotas.route("/")
-def index():
-    return "hello world"
 
 
 @rotas.route("/oscilacao", methods=['GET'])
@@ -32,3 +26,13 @@ def cadastra():
     except Exception as e:
         print("erro"+str(e))
         return (str(e))
+
+@rotas.route("/")
+def index():
+    return render_template("home.html.j2")
+
+@rotas.route("/mapa")
+def mapa():
+    # resultado = oscilacaoModel.listaOscilacao()
+    # resultado=resultado['resultado']
+    return render_template("map.html.j2")
