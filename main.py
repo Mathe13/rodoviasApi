@@ -1,11 +1,11 @@
 from flask import Flask
-# from flask_cors import CORS
+from flask_cors import CORS
 
 import os
 
 from controlers import routes
 app = Flask(__name__)
-# CORS(app, resources={r"/*": {"origins": "*"}})
+CORS(app, resources={r"/*": {"origins": "*"}})
 app.register_blueprint(routes.rotas)
 
 if __name__ == "__main__":
