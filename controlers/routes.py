@@ -1,4 +1,7 @@
-from flask import render_template, Blueprint, request
+from flask import render_template, Blueprint, request,Response
+from flask_cors import crossdomain
+# from flask_cors import cross_origin
+
 import utils
 from datetime import datetime
 from flask import jsonify
@@ -15,6 +18,7 @@ def lista():
 
 
 @rotas.route("/oscilacao", methods=['POST'])
+@cross_origin()
 def cadastra():
     data = request.get_json(force=True)
     data['datahora'] = (datetime.now()).isoformat()
