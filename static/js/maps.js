@@ -12,7 +12,7 @@ function initMap() {
         alert("I'm sorry, but geolocation services are not supported by your browser.");
         console.log("entrou else");
         centro = { lat: -34.397, lng: 150.644 };
-        show_map(centro)
+        show_map(centro);
     }
 }
 function show_map(centro) {
@@ -33,12 +33,16 @@ function add_markers() {
                     position: { lat: parseFloat(buraco.lat), lng: parseFloat(buraco.lng) },
                     map: this.map,
                     // icon: './assets/imgs/icon.png'
-                })
+                });
                 if (marcador) {
-                    markers.push(marcador)
+                    marcador.addListener('click', function () {
+                        window.open('https://maps.google.com/maps/?f=q&q=' + buraco.lat + ',' + buraco.lng, '_blank');
+                        map.setCenter(marcador.getPosition());
+                    });
+                    markers.push(marcador);
                 }
             });
-            let cluster = new MarkerClusterer(this.map, markers)
+            let cluster = new MarkerClusterer(this.map, markers);
         })
         .catch(err => { throw err });
 

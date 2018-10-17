@@ -13,7 +13,7 @@ import os
 
 from controlers import routes
 app = Flask(__name__)
-CORS(app, resources={r"/*": {"origins": "*"}})
+CORS(app, resources={r"/oscilacao*": {"origins": "*"}})
 app.register_blueprint(routes.rotas)
 
 if __name__ == "__main__":
