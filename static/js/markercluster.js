@@ -72,7 +72,7 @@ function MarkerClusterer(map, opt_markers, opt_options) {
     this.extend(MarkerClusterer, google.maps.OverlayView);
     this.map_ = map;
     // this.img_=img;
-    console.log(this.img_)
+    // console.log(this.img_)
     /**
      * @type {Array.<google.maps.Marker>}
      * @private
@@ -191,7 +191,7 @@ function MarkerClusterer(map, opt_markers, opt_options) {
  * @type {string}
  * @private
  */
-MarkerClusterer.prototype.MARKER_CLUSTER_IMAGE_PATH_ = '../images/m';
+MarkerClusterer.prototype.MARKER_CLUSTER_IMAGE_PATH_ = '../icons/cluster.png';
 
 
 /**
@@ -254,7 +254,7 @@ MarkerClusterer.prototype.setupStyles_ = function () {
             width: size
         });
     }
-    console.log(this.styles_)
+    console.log('estilos=', this.styles_)
 };
 
 /**
@@ -1230,7 +1230,7 @@ ClusterIcon.prototype.setCenter = function (center) {
 ClusterIcon.prototype.createCss = function (pos) {
     var style = [];
     console.log('aqui q importa', this)
-    style.push('background-image:url(' + this.styles_[0].url + ');');
+    style.push('background-image:url(../static/icons/cluster.png);');
     // style.push('background-image:url(' + "images/m" + ');');
 
 
