@@ -18,9 +18,9 @@ def addOscilacao(data):
     db = db_main.conect()
     try:
         with db.cursor() as cursor:
-            sql = "INSERT INTO `oscilacao` (`x`, `y`, `z`, `lat`, `lng`, `datahora`) VALUES (%s, %s, %s, %s, %s, %s);"
+            sql = "INSERT INTO `oscilacao` (`x`, `y`, `z`,`variation_x`,`variation_y`,`variation_z`, `lat`, `lng`, `datahora`) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s);"
             cursor.execute(
-                sql, (data['x'], data['y'], data['z'], data['lat'], data['lng'], data['datahora']))
+                sql, (data['x'], data['y'], data['z'], data['variation_x'], data['variation_y'], data['variation_z'], data['lat'], data['lng'], data['datahora']))
             db.commit()
 
             return({"status": "sucesso"})
