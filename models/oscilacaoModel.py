@@ -23,14 +23,14 @@ def addOscilacao(data):
                 `accelerometer_variation_x`,`accelerometer_variation_y`,`accelerometer_variation_z`,
                 `gyroscope_x`, `gyroscope_y`, `gyroscope_z`,
                 `gyroscope_variation_x`,`gyroscope_variation_y`,`gyroscope_variation_z`,
-                `lat`, `lng`,speed, aceleration, `datahora`)
-                VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s);"""
+                `lat`, `lng`,speed, acceleration, `datahora`)
+                VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s );"""
             cursor.execute(
                 sql, (data['accelerometer_x'], data['accelerometer_y'], data['accelerometer_z'],
                 data['accelerometer_variation_x'], data['accelerometer_variation_y'], data['accelerometer_variation_z'],
                 data['gyroscope_x'], data['gyroscope_y'], data['gyroscope_z'],
                 data['gyroscope_variation_x'], data['gyroscope_variation_y'], data['gyroscope_variation_z'],
-                data['lat'], data['lng'], data['speed'], data['aceleration'], data['datahora']))
+                data['lat'], data['lng'], data['speed'], data['acceleration'], data['datahora']))
             db.commit()
 
             return({"status": "sucesso"})
