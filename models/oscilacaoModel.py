@@ -36,5 +36,5 @@ def addOscilacao(data):
 
             return({"status": "sucesso"})
     except Exception as e:
-        print(e)
+        print('erro no cadastro',e)
         return ({"status": "erro", "resultado": e})
