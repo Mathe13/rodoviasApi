@@ -17,7 +17,7 @@ def listaOscilacao():
 
 def addOscilacao(data):
     db = db_main.conect()
-    print data
+    print(data)
     try:
         with db.cursor() as cursor:
             sql = """INSERT INTO `oscilacao` (
