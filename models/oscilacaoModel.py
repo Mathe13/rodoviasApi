@@ -26,7 +26,7 @@ def addOscilacao(data):
                 `gyroscope_x`, `gyroscope_y`, `gyroscope_z`,
                 `gyroscope_variation_x`,`gyroscope_variation_y`,`gyroscope_variation_z`,
                 `lat`, `lng`,speed, acceleration, `datahora`)
-                VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s );"""
+                VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s );"""
             cursor.execute(
                 sql, (data['accelerometer']['x'], data['accelerometer']['y'], data['accelerometer']['z'],
                       data['accelerometer_variation']['x'], data['accelerometer_variation']['y'], data['accelerometer_variation']['z'],
