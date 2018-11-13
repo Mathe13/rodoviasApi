@@ -17,6 +17,7 @@ def listaOscilacao():
 
 def addOscilacao(data):
     db = db_main.conect()
+    print data
     try:
         with db.cursor() as cursor:
             sql = """INSERT INTO `oscilacao` (
@@ -27,10 +28,10 @@ def addOscilacao(data):
                 `lat`, `lng`,speed, acceleration, `datahora`)
                 VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s );"""
             cursor.execute(
-                sql, (data['accelerometer_x'], data['accelerometer_y'], data['accelerometer_z'],
-                      data['accelerometer_variation_x'], data['accelerometer_variation_y'], data['accelerometer_variation_z'],
-                      data['gyroscope_x'], data['gyroscope_y'], data['gyroscope_z'],
-                      data['gyroscope_variation_x'], data['gyroscope_variation_y'], data['gyroscope_variation_z'],
+                sql, (data['accelerometer']['x'], data['accelerometer']['y'], data['accelerometer']['z'],
+                      data['accelerometer_variation']['x'], data['accelerometer_variation']['y'], data['accelerometer_variation']['z'],
+                      data['gyroscope']['x'], data['gyroscope']['y'], data['gyroscope']['z'],
+                      data['gyroscope_variation']['x'], data['gyroscope_variation']['y'], data['gyroscope_variation']['z'],
                       data['lat'], data['lng'], data['speed'], data['acceleration'], data['datahora']))
             db.commit()
 
