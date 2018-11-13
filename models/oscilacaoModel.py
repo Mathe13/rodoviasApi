@@ -11,6 +11,7 @@ def listaOscilacao():
 
             return({"status": "sucesso", "resultado": result})
     except Exception as e:
+        print(e)
         return ({"status": "erro", "resultado": str(e)})
 
 
@@ -35,4 +36,5 @@ def addOscilacao(data):
 
             return({"status": "sucesso"})
     except Exception as e:
+        print(e)
         return ({"status": "erro", "resultado": e})
