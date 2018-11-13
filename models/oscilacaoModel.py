@@ -32,7 +32,7 @@ def addOscilacao(data):
                       data['accelerometer_variation']['x'], data['accelerometer_variation']['y'], data['accelerometer_variation']['z'],
                       data['gyroscope']['x'], data['gyroscope']['y'], data['gyroscope']['z'],
                       data['gyroscope_variation']['x'], data['gyroscope_variation']['y'], data['gyroscope_variation']['z'],
-                      data['lat'], data['lng'], data['speed'], data['acceleration'], data['datahora']))
+                      data['location']['lat'], data['location']['lng'], data['speed'], data['acceleration'], data['datahora']))
             db.commit()
 
             return({"status": "sucesso"})
