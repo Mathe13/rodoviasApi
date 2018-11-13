@@ -10,3 +10,15 @@ def conect():
                                  cursorclass=pymysql.cursors.DictCursor)
 
     return connection
+
+
+def toSqlResolvedList(cursor, sql, dynamicValues):
+    try:
+        db = cursor._get_db()
+        if isinstance(sql, unicode):
+            sql = sql.encode(db.character_set_name())
+        for values in dynamicValues:
+            sqlList.append(sql % db.literal(values))
+    except:
+        pass
+    return sqlList

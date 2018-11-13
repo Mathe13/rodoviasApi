@@ -28,14 +28,13 @@ def addOscilacao(data):
                 VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s );"""
             cursor.execute(
                 sql, (data['accelerometer_x'], data['accelerometer_y'], data['accelerometer_z'],
-                data['accelerometer_variation_x'], data['accelerometer_variation_y'], data['accelerometer_variation_z'],
-                data['gyroscope_x'], data['gyroscope_y'], data['gyroscope_z'],
-                data['gyroscope_variation_x'], data['gyroscope_variation_y'], data['gyroscope_variation_z'],
-                data['lat'], data['lng'], data['speed'], data['acceleration'], data['datahora']))
+                      data['accelerometer_variation_x'], data['accelerometer_variation_y'], data['accelerometer_variation_z'],
+                      data['gyroscope_x'], data['gyroscope_y'], data['gyroscope_z'],
+                      data['gyroscope_variation_x'], data['gyroscope_variation_y'], data['gyroscope_variation_z'],
+                      data['lat'], data['lng'], data['speed'], data['acceleration'], data['datahora']))
             db.commit()
 
             return({"status": "sucesso"})
     except Exception as e:
-        print(cursor._last_executed)
-        print('erro no cadastro',e)
+        print('erro no cadastro', e)
         return ({"status": "erro", "resultado": e})
