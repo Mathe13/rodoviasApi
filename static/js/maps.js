@@ -42,7 +42,7 @@ function add_markers() {
                     markers.push(marcador);
                 }
             });
-            let cluster = new MarkerClusterer(this.map, markers);
+            // let cluster = new MarkerClusterer(this.map, markers);
         })
         .catch(err => { throw err });
 
