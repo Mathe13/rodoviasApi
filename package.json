@@ -1,0 +1,39 @@
+{
+  "name": "rodovias-api",
+  "version": "1.0.0",
+  "description": "Api para o projeto de analise de rodovias feito pela parceria entre UERGS,UFRGS e a universidade Nottingham",
+  "main": "index.js",
+  "scripts": {
+    "test": "nodemon index.js",
+    "start": "forever -o log app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Mathe13/rodoviasApi.git"
+  },
+  "keywords": [
+    "rodovias",
+    "uergs",
+    "ufrgs",
+    "nottingham",
+    "express",
+    "analise",
+    "api",
+    "restfull",
+    "rest"
+  ],
+  "author": "Matheus Araujo de Lima",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Mathe13/rodoviasApi/issues"
+  },
+  "homepage": "https://github.com/Mathe13/rodoviasApi#readme",
+  "dependencies": {
+    "body-parser": "^1.18.3",
+    "express": "^4.16.4",
+    "fecha": "^3.0.2",
+    "forever": "^0.15.3",
+    "morgan": "^1.9.1",
+    "mysql": "^2.16.0"
+  }
+}
