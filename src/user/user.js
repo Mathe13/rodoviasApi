@@ -12,6 +12,15 @@ class User {
 
     }
     static update(data) {
+        if (data.editado_em) {
+            data.editado_em = (new Date(data.editado_em)).toISOString().substring(0, 10)
+        }
+        if (data.ultimo_acesso) {
+            data.ultimo_acesso = (new Date(data.ultimo_acesso)).toISOString().substring(0, 10)
+        }
+        if (data.criado_em) {
+            data.criado_em = (new Date(data.criado_em)).toISOString().substring(0, 10)
+        }
         return sql_op.update(data, table)
     }
     /**
@@ -21,8 +30,8 @@ class User {
     */
     static login(celular, senha) {
         const
-            sqlUtils = require("../../utils/sql/sql_utils.js"),
             con = require("../../services/mysql_db.js"),
+            sqlUtils = require("../../utils/sql/sql_utils.js"),
             sql = sqlUtils.generate_select_query(
                 [{
                     name: "celular",

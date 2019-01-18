@@ -35,21 +35,35 @@ router.put("/", function (req, res) {
     })
 })
 
-router.use("/login", function (req, res) {
+
+router.get("/login", function (req, res) {
+    console.log(req.query)
     user.login(req.query.celular, req.query.senha).then((rows, fields) => {
-        console.log(rows[0]);
-        if ((rows[0].senha) == (req.query.senha)) {
-            res.status(201).json(rows[0])
+        if (rows[0]) {
+            if ((rows[0].senha) == (req.query.senha)) {
+                const fecha = require('fecha')
+                rows[0].ultimo_acesso = fecha.format(new Date(), 'YYYY-MM-DD HH:mm:ss');
+                console.log(rows[0])
+                user.update(rows[0])
+                res.status(201).json({
+                    "status": "Sucesso",
+                    "user": rows[0]
+                })
+            } else {
+                res.status(203).json({
+                    status: "credencias nao bateram"
+                })
+            }
         } else {
             res.status(203).json({
-                erro: "credencias nao bateram"
+                status: "Usuario inexistente"
             })
         }
 
     }).catch((error) => {
         //console.log("catch", error)
         res.status(500).send({
-            erro: "usuario inexistente" + String(error)
+            erro: String(error)
         })
     })
 })
