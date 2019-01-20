@@ -22,7 +22,7 @@ router.post("/", function (req, res) {
         console.log("cadastrou")
         res.status(200).json(rows)
     }).catch(err => {
-        res.status(500).json({ "erro": String(err) })
+        res.status(203).json({ "erro": String(err) })
     })
 })
 
