@@ -3,6 +3,7 @@ const
     bodyParser = require('body-parser'),
     config = require("./config.js"),
     user_routes = require("./src/user/user_routes.js"),
+    path_routes = require("./src/path/path_routes.js"),
     fs = require('fs');
 
 var accessLogStream = fs.createWriteStream('./access', { flags: 'a' });
@@ -50,6 +51,7 @@ app.use(function (req, res, next) {
 });
 
 app.use("/user", user_routes)
+app.use("/path", path_routes)
 
 app.use("/", function (req, res) {
     res.send({
