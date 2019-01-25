@@ -16,6 +16,7 @@ function initMap() {
     }
 }
 function show_map(centro) {
+    console.log("vai mostrar mapa", document.getElementById('map'))
     map = new google.maps.Map(document.getElementById('map'), {
         center: centro,
         zoom: 12
@@ -28,7 +29,7 @@ function add_markers() {
         .then((out) => {
             let markers = []
             out['resultado'].forEach(buraco => {
-                console.log(buraco)
+                // console.log(buraco)
                 let marcador = new google.maps.Marker({
                     position: { lat: parseFloat(buraco.lat), lng: parseFloat(buraco.lng) },
                     map: this.map,
@@ -42,7 +43,7 @@ function add_markers() {
                     markers.push(marcador);
                 }
             });
-            // let cluster = new MarkerClusterer(this.map, markers);
+            let cluster = new MarkerClusterer(this.map, markers);
         })
         .catch(err => { throw err });
 

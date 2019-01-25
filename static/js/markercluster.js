@@ -2,7 +2,7 @@
 // @compilation_level ADVANCED_OPTIMIZATIONS
 // @externs_url https://raw.githubusercontent.com/google/closure-compiler/master/contrib/externs/maps/google_maps_api_v3.js
 // ==/ClosureCompiler==
-
+console.log("qualquer coisa")
 /**
  * @name MarkerClusterer for Google Maps v3
  * @version version 1.0
@@ -64,6 +64,7 @@
  * @extends google.maps.OverlayView
  */
 function MarkerClusterer(map, opt_markers, opt_options) {
+    console.log("cluster inicio")
     // MarkerClusterer implements google.maps.OverlayView interface. We use the
     // extend function to extend MarkerClusterer with google.maps.OverlayView
     // because it might not always be available when the code is defined so we
@@ -191,7 +192,7 @@ function MarkerClusterer(map, opt_markers, opt_options) {
  * @type {string}
  * @private
  */
-MarkerClusterer.prototype.MARKER_CLUSTER_IMAGE_PATH_ = '../icons/cluster.png';
+MarkerClusterer.prototype.MARKER_CLUSTER_IMAGE_PATH_ = '/icons/cluster.png';
 
 
 /**
@@ -1230,7 +1231,7 @@ ClusterIcon.prototype.setCenter = function (center) {
 ClusterIcon.prototype.createCss = function (pos) {
     var style = [];
     console.log('aqui q importa', this)
-    style.push('background-image:url(../static/icons/cluster.png);');
+    style.push('background-image:url(/icons/cluster.png);');
     // style.push('background-image:url(' + "images/m" + ');');
 
 

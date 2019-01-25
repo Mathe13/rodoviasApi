@@ -28,6 +28,9 @@ var rawBodySaver = function (req, res, buf, encoding) {
     }
 }
 
+app.use(express.static('static'));
+
+
 app.use(bodyParser.json({
     verify: rawBodySaver
 }));
