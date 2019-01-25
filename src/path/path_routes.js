@@ -40,4 +40,8 @@ router.post("/", function (req, res) {
     })
 })
 
+router.put("/", function (req, res) {
+    path.update(req.body)
+})
+
 module.exports = router
