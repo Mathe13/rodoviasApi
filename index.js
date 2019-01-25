@@ -5,6 +5,7 @@ const
     user_routes = require("./src/user/user_routes.js"),
     path_routes = require("./src/path/path_routes.js"),
     sensor_routes = require("./src/sensor/sensor_routes.js"),
+    nunjucks = require('nunjucks'),
     fs = require('fs');
 
 var accessLogStream = fs.createWriteStream('./access', { flags: 'a' });
@@ -12,19 +13,15 @@ var errorLogStream = fs.createWriteStream('./error', { flags: 'a' });
 
 const app = express();
 
-// app.use(morgan("combined", {
-//     skip: function (req, res) {
-//         return res.statusCode < 400
-//     }, stream: errorLogStream
-// }));
+//template engine
+nunjucks.configure('views', {
+    autoescape: true,
+    express: app
+});
+app.set('views', './views'); // <--Path to your views folder
+app.set('view engine', 'njk')
 
-// app.use(morgan("combined", {
-//     skip: function (req, res) {
-//         return res.statusCode >= 400
-//     }, stream: accessLogStream
-// }));
-
-app.set('secret', config.secret)
+// app.set('secret', config.secret)
 var rawBodySaver = function (req, res, buf, encoding) {
     if (buf && buf.length) {
         req.rawBody = buf.toString(encoding || 'utf8');
@@ -55,12 +52,14 @@ app.use("/user", user_routes)
 app.use("/path", path_routes)
 app.use("/sensor", sensor_routes)
 
-app.use("/", function (req, res) {
-    res.send({
-        status: "online",
-        message: "the server is on, my friend"
-    })
+app.use("/mapa", function (req, res) {
+    res.render('map.html.njk')
 })
+
+app.use("/", function (req, res) {
+    res.render('home.html.njk');
+})
+
 
 
 
