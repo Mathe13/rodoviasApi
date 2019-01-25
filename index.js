@@ -57,7 +57,8 @@ app.use("/mapa", function (req, res) {
 })
 
 app.use("/", function (req, res) {
-    res.render('home.html.njk');
+    res.render('home.html.njk', { variavel: "oi" });
+    // res.render("<body>ola<body>")
 })
 
 
