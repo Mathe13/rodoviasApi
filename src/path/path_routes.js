@@ -18,6 +18,16 @@ router.get("/", function (req, res) {
         })
 })
 
+router.get("/tipo_veiculo", function (req, res) {
+    path.select_veiculos()
+        .then((rows, fields) => {
+            res.status(200).json(rows)
+        })
+        .catch(err => {
+            res.status(500).json({ "error": String(err) })
+        })
+})
+
 router.get("/detalhes", function (req, res) {
     req_data = utils.process_req(req.query);
     console.log(req_data)
@@ -32,6 +42,9 @@ router.get("/detalhes", function (req, res) {
 
 
 router.post("/", function (req, res) {
+    if (req.body.hora_inicio) {
+        req.body.hora_inicio = (new Date(req.body.hora_inicio)).toISOString().substring(0, 10)
+    }
     path.insert(req.body).then((rows, fields) => {
         console.log("cadastrou")
         res.status(200).json(rows)

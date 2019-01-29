@@ -8,6 +8,9 @@ class Trajeto {
     static select(fields = null, targets = null) {
         return sql_op.select(fields, targets, table)
     }
+    static select_veiculos() {
+        return sql_op.select(null, null, 'rodovias.tipo_veiculo')
+    }
 
     static full_select(targets) {
         //busca trajetos
