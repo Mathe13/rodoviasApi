@@ -15,7 +15,8 @@ module.exports = {
         host: "edo4plet5mhv93s3.cbetxkdyhwsb.us-east-1.rds.amazonaws.com",
         user: "nynyxn7w891pahsa",
         password: "zij7zp7igsbaxtil",
-        database: "c8ng80padace9x3w"
+        database: "c8ng80padace9x3w",
+        port: '3306'
     }
 
 }
