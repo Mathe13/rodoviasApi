@@ -42,9 +42,9 @@ router.get("/detalhes", function (req, res) {
 
 
 router.post("/", function (req, res) {
-    if (req.body.hora_inicio) {
-        req.body.hora_inicio = (new Date(req.body.hora_inicio)).toISOString().substring(0, 10)
-    }
+
+    req.body.hora_inicio = (fecha.format(new Date(), 'YYYY-MM-DD HH:mm:ss'))
+
     path.insert(req.body).then((rows, fields) => {
         console.log("cadastrou")
         res.status(200).json(rows)

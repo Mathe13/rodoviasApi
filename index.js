@@ -53,7 +53,7 @@ app.use(function (req, res, next) {
 
 app.use("/user", user_routes)
 app.use("/path", path_routes)
-app.use("/sensor", sensor_routes)
+app.use("/", sensor_routes)
 
 app.use("/mapa", function (req, res) {
     res.render('map.html.njk')
