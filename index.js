@@ -67,7 +67,12 @@ app.use("/", function (req, res) {
 
 
 
+try {
 
-app.listen(process.env.PORT || config.port, function () {
-    console.log('Example app listening on port ', (process.env.PORT || config.port));
-});
+    app.listen(process.env.PORT || config.port, function () {
+        console.log('Example app listening on port ', (process.env.PORT || config.port));
+    })
+}
+catch (e) {
+    console.log(e)
+}
