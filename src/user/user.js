@@ -1,6 +1,6 @@
 const
     sql_op = require("../../utils/sql/sql_common_operations.js"),
-    table = 'rodovias.user';
+    table = 'user';
 
 class User {
     static select(fields = null, targets = null) {

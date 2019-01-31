@@ -1,6 +1,6 @@
 const
     sql_op = require("../../utils/sql/sql_common_operations.js"),
-    table = 'rodovias.trajeto';
+    table = 'trajeto';
 
 class Trajeto {
 
@@ -9,7 +9,7 @@ class Trajeto {
         return sql_op.select(fields, targets, table)
     }
     static select_veiculos() {
-        return sql_op.select(null, null, 'rodovias.tipo_veiculo')
+        return sql_op.select(null, null, 'tipo_veiculo')
     }
 
     static full_select(targets) {
@@ -21,13 +21,13 @@ class Trajeto {
                 paths.forEach(path => {
                     //busca gps
                     targets = [{ 'name': 'trajeto_id', 'value': path.id }]
-                    sql_op.select(null, targets, 'rodovias.gps').then((rows, fields) => {
+                    sql_op.select(null, targets, 'gps').then((rows, fields) => {
                         path.gps = rows
                         //busca giroscopio
-                        sql_op.select(null, targets, 'rodovias.giroscopio').then((rows, fields) => {
+                        sql_op.select(null, targets, 'giroscopio').then((rows, fields) => {
                             path.giroscopio = rows
                             //busca acelerometro
-                            sql_op.select(null, targets, 'rodovias.acelerometro').then((rows, fields) => {
+                            sql_op.select(null, targets, 'acelerometro').then((rows, fields) => {
                                 path.acelerometro = rows
                             })
                         })
