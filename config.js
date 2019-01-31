@@ -13,7 +13,7 @@ module.exports = {
     bd: {
         // mysql://nynyxn7w891pahsa:zij7zp7igsbaxtil@edo4plet5mhv93s3.cbetxkdyhwsb.us-east-1.rds.amazonaws.com:3306/c8ng80padace9x3w
         connectionLimit: 10,
-        host: "edo4plet5mhv93s3.cbetxkdyhwsb.us-east-1.rds.amazonaws.com",
+        host: "edo4plet5mhv93s3.cbetxkdyhwsb.us-east-1.rds.amazonaws.com:3306/c8ng80padace9x3w",
         user: "nynyxn7w891pahsa",
         password: "zij7zp7igsbaxtil",
         database: "c8ng80padace9x3w",
