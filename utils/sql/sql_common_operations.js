@@ -13,7 +13,6 @@ class sql_common {
         return new Promise(function (resolve, reject) {
             // Do async job
             con.query(sql, function (err, rows, fields) {
-                con.release()
                 if (err) {
                     reject(err);
                 } else {
@@ -34,14 +33,12 @@ class sql_common {
         return new Promise(function (resolve, reject) {
             // Do async job
             con.query(sql, function (err, rows, fields) {
-                con.release()
                 if (err) {
                     reject(err);
 
                 } else {
                     resolve(rows, fields);
                 }
-
             })
         })
     }
@@ -56,7 +53,6 @@ class sql_common {
         return new Promise(function (resolve, reject) {
             // Do async job
             con.query(sql, function (err, rows, fields) {
-                con.release()
                 if (err) {
                     reject(err);
                 } else {
