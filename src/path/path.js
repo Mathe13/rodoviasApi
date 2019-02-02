@@ -21,14 +21,17 @@ class Trajeto {
                 paths.forEach(path => {
                     //busca gps
                     targets = [{ 'name': 'trajeto_id', 'value': path.id }]
-                    sql_op.select(null, targets, 'gps').then((rows, fields) => {
-                        path.gps = rows
+                    sql_op.select(null, targets, 'gps').then((rows2, fields) => {
+                        path.gps = rows2
+                        console.log(rows2)
                         //busca giroscopio
-                        sql_op.select(null, targets, 'giroscopio').then((rows, fields) => {
-                            path.giroscopio = rows
+                        sql_op.select(null, targets, 'giroscopio').then((rows3, fields) => {
+                            path.giroscopio = rows3
+                            console.log(rows3)
                             //busca acelerometro
-                            sql_op.select(null, targets, 'acelerometro').then((rows, fields) => {
-                                path.acelerometro = rows
+                            sql_op.select(null, targets, 'acelerometro').then((rows4, fields) => {
+                                path.acelerometro = rows4
+                                console.log(rows4)
                             })
                         })
                     })
