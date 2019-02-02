@@ -32,11 +32,12 @@ class Trajeto {
                             sql_op.select(null, targets, 'acelerometro').then((rows4, fields) => {
                                 path.acelerometro = rows4
                                 console.log(rows4)
+                                resolve(paths)
                             })
                         })
                     })
                 });
-                resolve(paths)
+
             }).catch(err => reject(err))
         })
     }
