@@ -8,6 +8,7 @@ class Trajeto {
     static select(fields = null, targets = null) {
         return sql_op.select(fields, targets, table)
     }
+
     static select_veiculos() {
         return sql_op.select(null, null, 'tipo_veiculo')
     }
@@ -49,17 +50,17 @@ class Trajeto {
 
 
     static update(data) {
-        if (data.recebido) {
-            data.recebido = (new Date(data.recebido)).toISOString()
-        }
+        // if (data.recebido) {
+        //     data.recebido = (fecha.format(data.recebido, 'YYYY-MM-DD HH:mm:ss'))
+        // }
         if (data.hora_inicio) {
-            data.hora_inicio = (new Date(data.hora_inicio)).toISOString()
+            data.hora_inicio = (fecha.format(data.hora_inicio, 'YYYY-MM-DD HH:mm:ss'))
         }
         if (data.hora_fim) {
-            data.hora_fim = (new Date(data.hora_fim)).toISOString()
+            data.hora_fim = (fecha.format(data.hora_fim, 'YYYY-MM-DD HH:mm:ss'))
         }
         if (data.enviado) {
-            data.enviado = (new Date(data.enviado)).toISOString()
+            data.enviado = (fecha.format(data.enviado, 'YYYY-MM-DD HH:mm:ss'))
         }
         return sql_op.update(data, table)
     }
