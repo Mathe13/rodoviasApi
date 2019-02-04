@@ -42,7 +42,7 @@ router.get("/login", function (req, res) {
         if (rows[0]) {
             if ((rows[0].senha) == (req.query.senha)) {
                 const fecha = require('fecha')
-                rows[0].ultimo_acesso = fecha.format(new Date(), 'YYYY-MM-DD HH:mm:ss');
+                rows[0].ultimo_acesso = new Date().toISOString();
                 console.log(rows[0])
                 user.update(rows[0])
                 res.status(201).json({

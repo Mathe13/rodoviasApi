@@ -29,8 +29,8 @@ router.get("/:sensor", function (req, res) {
 
 router.post("/:sensor", function (req, res) {
     // let sensor = "acelerometro"
-    console.log(req.body.datahora)
-    req.body.datahora = (fecha.format(req.body.datahora, 'YYYY-MM-DD HH:mm:ss'))
+    console.log(req.body.datahora.toLocaleString())
+    // req.body.datahora = (fecha.format(req.body.datahora, 'YYYY-MM-DD HH:mm:ss'))
     if (["acelerometro", "giroscopio", "gps"].includes(req.params.sensor)) {
         sensor.insert(req.params.sensor, req.body)
             .then((rows, fields) => {
