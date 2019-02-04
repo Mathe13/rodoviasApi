@@ -2,7 +2,7 @@ const
     express = require("express"),
     sensor = require("./sensor.js"),
     utils = require("../../utils/misc_utils.js"),
-    fecha=require('fecha')
+    fecha = require('fecha')
 router = express.Router()
 
 router.get("/:sensor", function (req, res) {
@@ -29,7 +29,7 @@ router.get("/:sensor", function (req, res) {
 
 router.post("/:sensor", function (req, res) {
     // let sensor = "acelerometro"
-    req.body.datahora = fecha.format(new Date(), 'YYYY-MM-DD HH:mm:ss')
+    req.body.datahora = new Date(req.body.datahora).toISOString()
 
     if (["acelerometro", "giroscopio", "gps"].includes(req.params.sensor)) {
         sensor.insert(req.params.sensor, req.body)

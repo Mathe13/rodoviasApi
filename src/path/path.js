@@ -49,14 +49,17 @@ class Trajeto {
 
 
     static update(data) {
+        if (data.recebido) {
+            data.recebido = (new Date(data.recebido)).toISOString()
+        }
         if (data.hora_inicio) {
-            data.hora_inicio = (new Date(data.hora_inicio)).toISOString().substring(0, 10)
+            data.hora_inicio = (new Date(data.hora_inicio)).toISOString()
         }
         if (data.hora_fim) {
-            data.hora_fim = (new Date(data.hora_fim)).toISOString().substring(0, 10)
+            data.hora_fim = (new Date(data.hora_fim)).toISOString()
         }
         if (data.enviado) {
-            data.enviado = (new Date(data.enviado)).toISOString().substring(0, 10)
+            data.enviado = (new Date(data.enviado)).toISOString()
         }
         return sql_op.update(data, table)
     }
