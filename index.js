@@ -48,16 +48,17 @@ app.use(bodyParser.raw({
 app.use(function (req, res, next) {
     res.header("Access-Control-Allow-Origin", "*");
     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+    res.header('Access-Control-Allow-Methods', 'PUT, POST, GET, DELETE, OPTIONS');
     next();
 });
 
 app.use("/user", user_routes)
 app.use("/path", path_routes)
-app.use("/", sensor_routes)
-
 app.use("/mapa", function (req, res) {
     res.render('map.html.njk')
 })
+app.use("/", sensor_routes)
+
 
 app.use("/", function (req, res) {
     res.render('home.html.njk', { variavel: "oi" });

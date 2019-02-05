@@ -22,13 +22,14 @@ function show_map(centro) {
         zoom: 12
     });
 }
-let url = base_url + 'oscilacao';
+let url = base_url + 'gps';
+console.log('url', url)
 function add_markers() {
     fetch(url)
         .then(res => res.json())
         .then((out) => {
             let markers = []
-            out['resultado'].forEach(buraco => {
+            out.forEach(buraco => {
                 // console.log(buraco)
                 let marcador = new google.maps.Marker({
                     position: { lat: parseFloat(buraco.lat), lng: parseFloat(buraco.lng) },
