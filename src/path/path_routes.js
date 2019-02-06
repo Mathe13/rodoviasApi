@@ -46,8 +46,6 @@ router.get("/detalhes", function (req, res) {
 
 router.post("/", function (req, res) {
 
-    req.body.hora_inicio = (fecha.format(new Date(), 'YYYY-MM-DD HH:mm:ss'))
-
     path.insert(req.body).then((rows, fields) => {
         console.log("cadastrou")
         res.status(200).json(rows)
