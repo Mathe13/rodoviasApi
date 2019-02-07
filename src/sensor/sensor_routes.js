@@ -5,7 +5,7 @@ const
     fecha = require('fecha')
 router = express.Router()
 
-router.get("/:sensor", function (req, res) {
+router.get("/:sensor/", function (req, res) {
     // let sensor = "acelerometro"
     if (["acelerometro", "giroscopio", "gps"].includes(req.params.sensor)) {
 

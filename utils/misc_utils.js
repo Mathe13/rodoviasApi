@@ -30,7 +30,7 @@ class Utils {
     static process_req(req) {
         var fields = null;
         var target = null;
-        // console.log("recebi", req)
+        console.log("recebi", req)
         if (fields) {
             fields = req.fields;
         }
