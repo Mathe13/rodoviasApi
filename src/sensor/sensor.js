@@ -2,7 +2,7 @@ const
     sql_op = require("../../utils/sql/sql_common_operations.js")
 
 class Sensor {
-    static select(sensor, fields = null, targets = null) {
+    static select(sensor, targets = null, fields = null, ) {
         return sql_op.select(fields, targets, sensor)
     }
     static insert(sensor, data) {

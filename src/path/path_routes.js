@@ -10,7 +10,7 @@ router = express.Router()
 router.get("/", function (req, res) {
     req_data = utils.process_req(req.query);
     console.log(req_data)
-    path.select(req_data.targets, req_data.fields)
+    path.select(req_data.fields, req_data.targets)
         .then((rows, fields) => {
             res.status(200).json(rows)
         })
@@ -33,6 +33,17 @@ router.get("/detalhes", function (req, res) {
     req_data = utils.process_req(req.query);
     console.log(req_data)
     path.full_select(req_data.targets)
+        .then((rows, fields) => {
+            res.status(200).json(rows)
+        })
+        .catch(err => {
+            res.status(500).json({ "error": String(err) })
+        })
+})
+
+router.get("/detalhes/:id", function (req, res) {
+    let targets = [{ name: 'id', value: req.params.id }]
+    path.full_select(targets)
         .then((rows, fields) => {
             res.status(200).json(rows)
         })

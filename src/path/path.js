@@ -6,6 +6,7 @@ class Trajeto {
 
 
     static select(fields = null, targets = null) {
+        console.log('recebi :', { fields: fields, targets: targets })
         return sql_op.select(fields, targets, table)
     }
 
@@ -15,6 +16,7 @@ class Trajeto {
 
     static full_select(targets) {
         //busca trajetos
+        console.log('recebi', targets)
         return new Promise(function (resolve, reject) {
             sql_op.select(null, targets, table).then((rows, fields) => {
                 let paths = rows
@@ -24,15 +26,15 @@ class Trajeto {
                     targets = [{ 'name': 'trajeto_id', 'value': path.id }]
                     sql_op.select(null, targets, 'gps').then((rows2, fields) => {
                         path.gps = rows2
-                        console.log(rows2)
+                        // console.log(rows2)
                         //busca giroscopio
                         sql_op.select(null, targets, 'giroscopio').then((rows3, fields) => {
                             path.giroscopio = rows3
-                            console.log(rows3)
+                            // console.log(rows3)
                             //busca acelerometro
                             sql_op.select(null, targets, 'acelerometro').then((rows4, fields) => {
                                 path.acelerometro = rows4
-                                console.log(rows4)
+                                // console.log(rows4)
                                 resolve(paths)
                             })
                         })

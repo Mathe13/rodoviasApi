@@ -8,6 +8,8 @@ class sql_common {
      * @returns {Promise}  que vai resolver em rows e fields   
      **/
     static select(fields = null, targets = null, table) {
+        console.log('recebi', { fields: fields, targets: targets })
+
         const sql = sqlUtils.generate_select_query(targets, fields, table)
         //console.log("sql gerado:", sql)
         return new Promise(function (resolve, reject) {
