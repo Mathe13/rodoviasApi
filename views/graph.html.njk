@@ -1,0 +1,132 @@
+<html>
+<head>
+    <script type="text/javascript" src="/js/base_data.js"></script>
+    <script type="text/javascript" src="/js/canvasjs.min.js"></script>
+</head>
+<body>
+    <h3>Gerado automaticamente</h3>
+    <div id="chartContainer" style="height: 300px; width: 100%;"></div>
+<body>
+</html>
+<script>
+preparaDados({{id}})
+function organizarDados(dados){
+    var retorno={acelerometro:{x:[],y:[],z:[]},giroscopio:{x:[],y:[],z:[]}}
+    dados.giroscopio.forEach(leitura => {
+        retorno.giroscopio.x.push({ x:new Date(leitura.datahora),y:parseFloat(leitura.x) })
+        retorno.giroscopio.y.push({ x:new Date(leitura.datahora),y:parseFloat(leitura.y) })
+        retorno.giroscopio.z.push({ x:new Date(leitura.datahora),y:parseFloat(leitura.z) })
+    })
+    dados.acelerometro.forEach(leitura => {
+        retorno.acelerometro.x.push({ x:new Date(leitura.datahora),y:parseFloat(leitura.x) })
+        retorno.acelerometro.y.push({ x:new Date(leitura.datahora),y:parseFloat(leitura.y) })
+        retorno.acelerometro.z.push({ x:new Date(leitura.datahora),y:parseFloat(leitura.z) })
+    })
+    console.log(retorno);
+    return retorno;
+}
+function preparaDados(id){
+    let url = base_url + 'path/detalhes/{{id}}';
+    console.log(url)
+    fetch(url)
+        .then(res => res.json())
+            .then((path) => {
+                    path=path[0]
+                    console.log('path:',path)
+                    var dados = organizarDados(path)
+                    gera_grafico(dados)
+
+                })
+                .catch(err => { throw err });
+}
+function gera_grafico(dados) {
+var chart = new CanvasJS.Chart("chartContainer",
+    {
+      	animationEnabled: true,
+	    theme: "light2",
+	    title:{
+		    text: "Gráfico da coleta {{id}}"
+	    },
+        toolTip:{
+		shared:true
+	    },  
+        axisX:{
+            title:'Data',
+		crosshair: {
+			enabled: true,
+			snapToDataPoint: true
+		}
+	},
+	axisY: {
+		title: "Valor",
+		crosshair: {
+			enabled: true
+		}
+	},
+    legend:{
+		cursor:"pointer",
+		verticalAlign: "bottom",
+		horizontalAlign: "left",
+		dockInsidePlotArea: true,
+	},
+      data: [
+      {        	
+        showInLegend: true,
+		name: "acelerômetro x",
+		markerType: "square",
+        type: "line",
+        dataPoints: dados.acelerometro.x
+      },
+        {      
+        showInLegend: true,
+		name: "acelerômetro y",
+		markerType: "square",  
+        type: "line",
+        dataPoints: dados.acelerometro.y
+      },
+        {  
+        showInLegend: true,
+		name: "acelerômetro z",
+		markerType: "square",      
+        type: "line",
+        dataPoints: dados.acelerometro.z
+      },
+        {          
+        showInLegend: true,
+		name: "giroscópio x",
+		markerType: "circle", 
+        type: "line",
+        dataPoints: dados.giroscopio.x
+      },
+        {   
+        showInLegend: true,
+		name: "giroscópio x",
+		markerType: "circle",      
+        type: "line",
+        dataPoints: dados.giroscopio.y
+      },
+        {     
+        showInLegend: true,
+		name: "giroscópio x",
+		markerType: "circle",    
+        type: "line",
+        dataPoints: dados.giroscopio.z
+      },
+
+      ]
+    });
+
+    chart.render();
+
+}
+    function toogleDataSeries(e){
+        if (typeof(e.dataSeries.visible) === "undefined" || e.dataSeries.visible) {
+            e.dataSeries.visible = false;
+        } else{
+            e.dataSeries.visible = true;
+        }
+        chart.render();
+    }
+
+
+</script>

@@ -24,6 +24,10 @@ router.get('/map/:id', function (req, res) {
 
 })
 
+router.get('/graph/:id', function (req, res) {
+    res.render('graph.html.njk', { id: req.params.id })
+})
+
 router.get("/tipo_veiculo", function (req, res) {
     path.select_veiculos()
         .then((rows, fields) => {
