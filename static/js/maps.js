@@ -22,30 +22,34 @@ function show_map(centro) {
         zoom: 12
     });
 }
-let url = base_url + 'gps';
+let url = base_url + 'path/detalhes';
 console.log('url', url)
 function add_markers() {
     fetch(url)
         .then(res => res.json())
         .then((out) => {
             let markers = []
-            out.forEach(buraco => {
-                // console.log(buraco)
-                let marcador = new google.maps.Marker({
-                    position: { lat: parseFloat(buraco.lat), lng: parseFloat(buraco.lng) },
-                    map: this.map,
-                    // icon: './assets/imgs/icon.png'
+            out.forEach(path => {
+                // console.log(out)
+                var flightPlanCoordinates = justLatLng(path.gps)
+                var flightPath = new google.maps.Polyline({
+                    path: flightPlanCoordinates,
+                    geodesic: true,
+                    strokeColor: '#FF0000',
+                    strokeOpacity: 1.0,
+                    strokeWeight: 2
                 });
-                if (marcador) {
-                    marcador.addListener('click', function () {
-                        window.open('https://maps.google.com/maps/?f=q&q=' + buraco.lat + ',' + buraco.lng, '_blank');
-                        map.setCenter(marcador.getPosition());
-                    });
-                    markers.push(marcador);
-                }
+
+                flightPath.setMap(map);
             });
-            let cluster = new MarkerClusterer(this.map, markers);
         })
         .catch(err => { throw err });
 
+}
+function justLatLng(data) {
+    let LatLng = []
+    data.forEach(piece => {
+        LatLng.push({ lat: parseFloat(piece.lat), lng: parseFloat(piece.lng) })
+    })
+    return LatLng;
 }

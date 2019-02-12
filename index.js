@@ -61,11 +61,9 @@ app.use("/", sensor_routes)
 
 
 app.use("/", function (req, res) {
-    res.render('home.html.njk', { variavel: "oi" });
+    res.render('home.html.njk', { variavel: { name: "oi" } });
     // res.render("<body>ola<body>")
 })
-
-
 
 
 try {

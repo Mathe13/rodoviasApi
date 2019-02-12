@@ -1,0 +1,76 @@
+<html lang="pt-br">
+<head>
+<link rel="stylesheet" href="/css/maps.css">
+
+<head>
+<body>
+    <div style="background-image: url(/icons/cluster.png); background-size: cover; background-position: 0px 0px; height: 32px; line-height: 32px; width: 32px; text-align: center; cursor: pointer; top: -125.323px; left: 77.1532px; color: black; position: absolute; font-size: 11px; font-family: Arial, sans-serif; font-weight: bold;">4</div>
+    <div id="map" style="width:100%"></div>
+</body>
+</html>
+  <script type="text/javascript" src="/js/base_data.js"></script>
+
+    <script async defer
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDkK8945ckkbgGP93QtliiGL-ea84WJ8vo&callback=initMap">
+    </script>
+    <script>
+    console.log('teste')
+    var map;
+        function initMap() {
+            console.log("vai iniciar mapa" + base_url);
+            if ("geolocation" in navigator) {
+                console.log("entrou if");
+                navigator.geolocation.getCurrentPosition(function (position) {
+                    centro = { lat: position.coords.latitude, lng: position.coords.longitude };
+                    show_map(centro);
+                });
+            } else {
+                alert("I'm sorry, but geolocation services are not supported by your browser.");
+                console.log("entrou else");
+                centro = { lat: -34.397, lng: 150.644 };
+                show_map(centro);
+            }
+        }
+        function show_map(centro) {
+            console.log("vai mostrar mapa", document.getElementById('map'))
+            map = new google.maps.Map(document.getElementById('map'), {
+                center: centro,
+                zoom: 12
+            });
+            show_line();
+        }
+        function show_line() {
+        let url = base_url + 'path/detalhes/{{id}}';
+        console.log('url', url)
+            fetch(url)
+                .then(res => res.json())
+                .then((path) => {
+                        path=path[0]
+                        console.log('path:',path)
+                        var flightPlanCoordinates = justLatLng(path.gps)
+                        var flightPath = new google.maps.Polyline({
+                            path: flightPlanCoordinates,
+                            geodesic: true,
+                            strokeColor: '#FF0000',
+                            strokeOpacity: 1.0,
+                            strokeWeight: 2
+                        });
+
+                        flightPath.setMap(map);
+                
+                })
+                .catch(err => { throw err });
+
+        }
+
+        
+      
+        function justLatLng(data) {
+            let LatLng = []
+            data.forEach(piece => {
+                LatLng.push({ lat: parseFloat(piece.lat), lng: parseFloat(piece.lng) })
+            })
+            return LatLng;
+        }
+
+    </script>
