@@ -8,8 +8,12 @@ const
     nunjucks = require('nunjucks'),
     fs = require('fs');
 
-var accessLogStream = fs.createWriteStream('./access', { flags: 'a' });
-var errorLogStream = fs.createWriteStream('./error', { flags: 'a' });
+var accessLogStream = fs.createWriteStream('./access', {
+    flags: 'a'
+});
+var errorLogStream = fs.createWriteStream('./error', {
+    flags: 'a'
+});
 
 const app = express();
 
@@ -29,6 +33,7 @@ var rawBodySaver = function (req, res, buf, encoding) {
 }
 
 app.use(express.static('static'));
+app.use(express.static('./node_modules/'));
 
 
 app.use(bodyParser.json({
@@ -61,7 +66,11 @@ app.use("/", sensor_routes)
 
 
 app.use("/", function (req, res) {
-    res.render('home.html.njk', { variavel: { name: "oi" } });
+    res.render('home.html.njk', {
+        variavel: {
+            name: "oi"
+        }
+    });
     // res.render("<body>ola<body>")
 })
 
@@ -71,7 +80,6 @@ try {
     app.listen(process.env.PORT || config.port, function () {
         console.log('Example app listening on port ', (process.env.PORT || config.port));
     })
-}
-catch (e) {
+} catch (e) {
     console.log(e)
 }

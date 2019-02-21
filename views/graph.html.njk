@@ -2,10 +2,12 @@
 <head>
     <script type="text/javascript" src="/js/base_data.js"></script>
     <script type="text/javascript" src="/js/canvasjs.min.js"></script>
+
 </head>
 <body>
     <h3>Gerado automaticamente</h3>
-    <div id="chartContainer" style="height: 300px; width: 100%;"></div>
+    <div id="chartContainer1" width="100%" height="400" style="height: 400px; max-width: 100%;"></div>
+    <div id="chartContainer2"  width="100%" height="400" style="height: 400px; max-width: 100%;"></div>
 <body>
 </html>
 <script>
@@ -34,35 +36,42 @@ function preparaDados(id){
                     path=path[0]
                     console.log('path:',path)
                     var dados = organizarDados(path)
-                    gera_grafico(dados)
+                    gera_graficos(dados,{velocidade:path.velocidade,espacamento:path.espacamento})
 
                 })
                 .catch(err => { throw err });
 }
-function gera_grafico(dados) {
-var chart = new CanvasJS.Chart("chartContainer",
+function gera_graficos(dados,path) {
+var chart1 = new CanvasJS.Chart("chartContainer1",
     {
+        zoomEnabled: true,
       	animationEnabled: true,
 	    theme: "light2",
-	    title:{
-		    text: "Gráfico da coleta {{id}}"
-	    },
+        title:{
+            text:"Gráfico do acelerômetro da coleta {{id}}"
+        },
+        subtitles:[{
+            text: "Espaçamento "+path.espacamento+", Velocidade:"+path.velocidade,
+            fontSize: 14
+        }],
         toolTip:{
 		shared:true
 	    },  
         axisX:{
-            title:'Data',
+            title:'Data e Hora',
 		crosshair: {
 			enabled: true,
 			snapToDataPoint: true
-		}
+		},
+        type: 'linear'
 	},
 	axisY: {
-		title: "Valor",
+		title: "m/s^2",
 		crosshair: {
 			enabled: true
 		}
 	},
+    
     legend:{
 		cursor:"pointer",
 		verticalAlign: "bottom",
@@ -91,7 +100,49 @@ var chart = new CanvasJS.Chart("chartContainer",
         type: "line",
         dataPoints: dados.acelerometro.z
       },
-        {          
+        
+
+      ],
+       
+    
+    });
+    var chart2 = new CanvasJS.Chart("chartContainer2",
+    {
+        zoomEnabled: true,
+      	animationEnabled: true,
+	    theme: "light2",
+        title:{
+            text:"Gráfico do giroscópio da coleta {{id}}"
+        },
+        subtitles:[{
+            text: "Espaçamento "+path.espacamento+", Velocidade:"+path.velocidade,
+            fontSize: 14
+        }],
+
+        toolTip:{
+		shared:true
+	    },  
+        axisX:{
+            title:'Data',
+		crosshair: {
+			enabled: true,
+			snapToDataPoint: true
+		}
+	},
+	axisY: {
+		title: "Valor",
+		crosshair: {
+			enabled: true
+		}
+	},
+    legend:{
+		cursor:"pointer",
+		verticalAlign: "bottom",
+		horizontalAlign: "left",
+		dockInsidePlotArea: true,
+	},
+      data: [
+     {          
         showInLegend: true,
 		name: "giroscópio x",
 		markerType: "circle", 
@@ -112,11 +163,17 @@ var chart = new CanvasJS.Chart("chartContainer",
         type: "line",
         dataPoints: dados.giroscopio.z
       },
+        
 
-      ]
-    });
+      ],
+    }
 
-    chart.render();
+    
+    
+    );
+
+    chart1.render();
+    chart2.render();
 
 }
     function toogleDataSeries(e){

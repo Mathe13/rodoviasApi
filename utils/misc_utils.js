@@ -11,7 +11,10 @@ class Utils {
             valores.push(value)
             //console.log(key, value);
         }
-        return { chaves: chaves, valores: valores }
+        return {
+            chaves: chaves,
+            valores: valores
+        }
     }
 
     /**
@@ -25,6 +28,23 @@ class Utils {
         var day = Math.floor(diff / oneDay);
         //console.log('Day of year: ' + day);
         return day + "-" + (new Date()).getFullYear()
+    }
+
+    static getHaversineDistance(firstLocation, secondLocation) {
+        const earthRadius = 6371; // km 
+
+        const diffLat = (secondLocation.lat - firstLocation.lat) * Math.PI / 180;
+        const diffLng = (secondLocation.lng - firstLocation.lng) * Math.PI / 180;
+
+        const arc = Math.cos(
+                firstLocation.lat * Math.PI / 180) * Math.cos(secondLocation.lat * Math.PI / 180) *
+            Math.sin(diffLng / 2) * Math.sin(diffLng / 2) +
+            Math.sin(diffLat / 2) * Math.sin(diffLat / 2);
+        const line = 2 * Math.atan2(Math.sqrt(arc), Math.sqrt(1 - arc));
+
+        const distance = earthRadius * line;
+
+        return distance;
     }
 
     static process_req(req) {
@@ -52,7 +72,10 @@ class Utils {
             }
         }
         console.log(target)
-        return { targets: target, fields: fields }
+        return {
+            targets: target,
+            fields: fields
+        }
     }
 
 

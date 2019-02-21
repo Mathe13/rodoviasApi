@@ -6,7 +6,10 @@ class Trajeto {
 
 
     static select(fields = null, targets = null) {
-        console.log('recebi :', { fields: fields, targets: targets })
+        console.log('recebi :', {
+            fields: fields,
+            targets: targets
+        })
         return sql_op.select(fields, targets, table)
     }
 
@@ -16,6 +19,7 @@ class Trajeto {
 
     static full_select(targets) {
         //busca trajetos
+        const utils = require('../../utils/misc_utils.js');
         console.log('recebi', targets)
         return new Promise(function (resolve, reject) {
             sql_op.select(null, targets, table).then((rows, fields) => {
@@ -23,7 +27,10 @@ class Trajeto {
                 //busca leituras
                 paths.forEach(path => {
                     //busca gps
-                    targets = [{ 'name': 'trajeto_id', 'value': path.id }]
+                    targets = [{
+                        'name': 'trajeto_id',
+                        'value': path.id
+                    }]
                     sql_op.select(null, targets, 'gps').then((rows2, fields) => {
                         path.gps = rows2
                         // console.log(rows2)
@@ -35,6 +42,13 @@ class Trajeto {
                             sql_op.select(null, targets, 'acelerometro').then((rows4, fields) => {
                                 path.acelerometro = rows4
                                 // console.log(rows4)
+                                path['distancia_percorrida'] = utils.getHaversineDistance({
+                                    lat: path.gps[0].lat,
+                                    lng: path.gps[0].lng
+                                }, {
+                                    lat: path.gps[path.gps.length - 1].lat,
+                                    lng: path.gps[path.gps.length - 1].lng
+                                })
                                 resolve(paths)
                             })
                         })
