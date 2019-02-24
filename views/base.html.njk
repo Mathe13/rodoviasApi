@@ -19,7 +19,6 @@
   <style>
   {% block style%}
     footer {
-    position: fixed;
     right: 0;
     bottom: 0;
     left: 0;
@@ -55,6 +54,7 @@
         padding-top: 35px;
         padding-bottom: 70px;
     }
+
     .navbar {
         padding-top: 10px;
         padding-bottom: 10px;
@@ -132,7 +132,7 @@
             <div class="dropdown">
               <a class="navbar-brand">Opções</a>
               <div class="dropdown-content">
-                <a href="#">Pesquisar leituras</a>
+                <a href="/path/filtrar">Pesquisar leituras</a>
                 <a href="#">Documentação</a>
                 <a href="#">Sobre</a>
                 <a href="https://github.com/Mathe13/rodoviasApp"  target="_blank">Ver app no Github</a>
@@ -159,7 +159,7 @@
 
 <!-- Footer -->
 <br>
-<footer class="container-fluid bg-4 text-center">
+<footer class=" bg-4 text-center;" style:"    padding-top: 15px!important;">
   {% block footer %}
 
       <a class="" href="https://github.com/Mathe13/">

@@ -1,8 +1,43 @@
 {% extends "base.html.njk" %}
 {% block title %}
-Busca de lituras
+Busca de leituras
 {% endblock %}
 {% block style%}
+table.minimalistBlack {
+  border: 3px solid #000000;
+  width: 100%;
+  text-align: left;
+  border-collapse: collapse;
+}
+table.minimalistBlack td, table.minimalistBlack th {
+  border: 1px solid #000000;
+  padding: 5px 4px;
+}
+table.minimalistBlack tbody td {
+  font-size: 13px;
+}
+table.minimalistBlack thead {
+  background: #CFCFCF;
+  background: -moz-linear-gradient(top, #dbdbdb 0%, #d3d3d3 66%, #CFCFCF 100%);
+  background: -webkit-linear-gradient(top, #dbdbdb 0%, #d3d3d3 66%, #CFCFCF 100%);
+  background: linear-gradient(to bottom, #dbdbdb 0%, #d3d3d3 66%, #CFCFCF 100%);
+  border-bottom: 3px solid #000000;
+}
+table.minimalistBlack thead th {
+  font-size: 15px;
+  font-weight: bold;
+  color: #000000;
+  text-align: left;
+}
+table.minimalistBlack tfoot {
+  font-size: 14px;
+  font-weight: bold;
+  color: #000000;
+  border-top: 3px solid #000000;
+}
+table.minimalistBlack tfoot td {
+  font-size: 14px;
+}
 {{super()}}
 {% endblock %}
 {% block body %}
@@ -11,8 +46,7 @@ Busca de lituras
     <h3>
         Exibição de leituras
     </h3>
-    <div class="row">
-        <div id="div-form" style="margin-top: 15px;padding: 10px;">
+        <div id="div-form" class="row" style="margin-top: 15px;padding: 10px;">
 
             <form>
                 <div class="col-md-4 col-md-offset-4">
@@ -73,9 +107,31 @@ Busca de lituras
                 </div>
             </form>
         </div>
+        <br>
+        <div id="tabelaX" class="row" style="display:none">
+            <div style="overflow-x:auto;display: inline;">
+            <table style="width:100%" class="minimalistBlack">
+                <thead>
 
-    </div>
+                    <tr>
+                        <th>Id</th>
+                        <th>Id Usuário</th> 
+                        <th>Rodovia</th>
+                        <th>Data</th>
+                        <th>Velocidade</th>
+                        <th>espacamento</th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody id="corpo-tabela">
+                </tbody>
+               
+            </table>
+        </div>
 </div>
+    </div>
 {% endblock%}
 {% block script %}
 <script>
@@ -90,28 +146,66 @@ Busca de lituras
          document.getElementById(id).style.display = "inline";
     } 
     function buscaData(){
-        var data_inicio=document.getElementById('data_inicio').value;
-        var data_fim=document.getElementById('data_fim').value;
-        var condicoes = ''
-        if(data_inicio){
-            condicoes +='target[]=recebido&target_value[]='+(new Date(data_inicio)).toISOString()+'&target_operator=>'
-        }
-        if(data_fim){
-            condicoes +='&target[]=recebido&target_value[]='+(new Date(data_fim)).toISOString()+'&target_operator=<'
-        }
-       var url = base_url+'path?'+condicoes
-       console.log(url)
+         var data_inicio=document.getElementById('data_inicio').value;
+         var data_fim=document.getElementById('data_fim').value;
+         var condicoes = ''
+         if(data_inicio){
+             condicoes +='target[]=recebido&target_value[]='+(new Date(data_inicio)).toISOString()+'&target_operator=>'
+         }
+         if(data_fim){
+             condicoes +='&target[]=recebido&target_value[]='+(new Date(data_fim)).toISOString()+'&target_operator=<'
+         }
+         var url = base_url+'path?'+condicoes
+         console.log(url)
+         atualiza(url)
     }
     function buscaNome(){
         var nome=document.getElementById('nome_input').value
         var url = base_url+'path/'+nome
         console.log(url)
+        atualiza(url)
 
     }
     function buscaRodovia(){
         var rodovia= document.getElementById('rodovia_input').value
         var url=base_url+'path/?target[]=nome_rodovia&target_value[]='+rodovia+'&target_operator[]=LIKE'
         console.log(url)
+        atualiza(url)
+    }
+    function atualiza(url){
+          fetch(url)
+         .then(res => res.json())
+         .then((out) => {
+            console.log(out)
+            var conteudo='';
+            out.forEach(path=>{
+                conteudo+=`
+                <tr>
+                    <td>${path.id}</td>
+                    <td>${path.user_id}</td>
+                    <td>${path.nome_rodovia}</td>
+
+                    <td>${path.recebido}</td>
+                    <td>${path.velocidade}</td>
+                    <td>${path.espacamento}</td>
+                    <td>
+                        <a href="/path/detalhes/${path.id}" target="_blank" type="button" class="btn btn-primary">Detalhes</a>
+                    </td>
+                    <td>
+                        <a href="/path/graph/${path.id}" target="_blank" type="button" class="btn btn-primary">Gráficos</a>
+                    </td>
+                    <td>
+                        <a href="/path/map/${path.id}" target="_blank" type="button" class="btn btn-primary">Mapa</a>
+                    </td>
+
+                </tr>
+                `
+
+            })
+            document.getElementById('corpo-tabela').innerHTML=conteudo
+            document.getElementById('tabelaX').style.display = "inline";
+         })
+         .catch(err => { throw err });
     }
     </script> 
     {% endblock %}
