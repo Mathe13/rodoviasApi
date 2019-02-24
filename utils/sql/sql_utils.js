@@ -60,6 +60,7 @@ class sqlUtils {
      **/
     static generate_where(targets) {
         var result = ""
+        console.log('aqui importa', targets)
         targets.forEach(target => {
             if (result == "") {
                 if (target.operator) {
@@ -68,9 +69,15 @@ class sqlUtils {
                     result = " " + target.name + " = '" + target.value + "'"
                 }
             } else {
-                result = result + " " + target.name + " = '" + target.value + "'"
+                if (target.operator) {
+                    result = result + " " + target.name + " " + target.operator + "  '" + target.value + "'"
+                } else {
+                    result = result + " " + target.name + " = '" + target.value + "'"
+                }
             }
+            result += ' AND ';
         });
+        result = result.slice(0, (result.length - 4)) //tira o ultimo and
         return result
     }
 

@@ -50,16 +50,17 @@ class Utils {
     static process_req(req) {
         var fields = null;
         var target = null;
-        console.log("recebi", req)
+        console.log("recebi 2", req)
         if (fields) {
             fields = req.fields;
         }
         if (req.target && req.target_value) {
             // console.log("entrei if target")
             target = []
-            var tmp = {}
             if (req.target.length == req.target_value.length) {
                 for (var i = 0; i < (req.target).length; i++) {
+                    var tmp = {}
+                    // console.log('trajeto', req.target_operator[i])
                     tmp.name = req.target[i]
                     tmp.value = req.target_value[i]
                     if (req.target_operator) {
