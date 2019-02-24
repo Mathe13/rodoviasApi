@@ -15,17 +15,27 @@ router.get("/", function (req, res) {
             res.status(200).json(rows)
         })
         .catch(err => {
-            res.status(500).json({ "error": String(err) })
+            res.status(500).json({
+                "error": String(err)
+            })
         })
 })
 
 router.get('/map/:id', function (req, res) {
-    res.render('path_mapa.html.njk', { id: req.params.id })
+    res.render('path_mapa.html.njk', {
+        id: req.params.id
+    })
+
+})
+router.get('/filtrar', function (req, res) {
+    res.render('trajetos.html.njk')
 
 })
 
 router.get('/graph/:id', function (req, res) {
-    res.render('graph.html.njk', { id: req.params.id })
+    res.render('graph.html.njk', {
+        id: req.params.id
+    })
 })
 
 router.get("/tipo_veiculo", function (req, res) {
@@ -34,7 +44,9 @@ router.get("/tipo_veiculo", function (req, res) {
             res.status(200).json(rows)
         })
         .catch(err => {
-            res.status(500).json({ "error": String(err) })
+            res.status(500).json({
+                "error": String(err)
+            })
         })
 })
 
@@ -46,18 +58,25 @@ router.get("/detalhes", function (req, res) {
             res.status(200).json(rows)
         })
         .catch(err => {
-            res.status(500).json({ "error": String(err) })
+            res.status(500).json({
+                "error": String(err)
+            })
         })
 })
 
 router.get("/detalhes/:id", function (req, res) {
-    let targets = [{ name: 'id', value: req.params.id }]
+    let targets = [{
+        name: 'id',
+        value: req.params.id
+    }]
     path.full_select(targets)
         .then((rows, fields) => {
             res.status(200).json(rows)
         })
         .catch(err => {
-            res.status(500).json({ "error": String(err) })
+            res.status(500).json({
+                "error": String(err)
+            })
         })
 })
 
@@ -70,7 +89,9 @@ router.post("/", function (req, res) {
         console.log("cadastrou")
         res.status(200).json(rows)
     }).catch(err => {
-        res.status(203).json({ "erro": String(err) })
+        res.status(203).json({
+            "erro": String(err)
+        })
     })
 })
 

@@ -52,12 +52,12 @@
         color: #fff;
     }
     .container-fluid {
-        padding-top: 70px;
+        padding-top: 35px;
         padding-bottom: 70px;
     }
     .navbar {
-        padding-top: 15px;
-        padding-bottom: 15px;
+        padding-top: 10px;
+        padding-bottom: 10px;
         border: 0;
         border-radius: 0;
         margin-bottom: 0;
@@ -67,6 +67,45 @@
     .navbar-nav  li a:hover {
         color: #1abc9c !important;
     }
+    /* Dropdown Button */
+{# .dropbtn {
+  background-color: #4CAF50;
+  color: white;
+  padding: 16px;
+  font-size: 16px;
+  border: none;
+} #}
+
+/* The container <div> - needed to position the dropdown content */
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+/* Dropdown Content (Hidden by Default) */
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f1f1f1;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+}
+
+/* Links inside the dropdown */
+.dropdown-content a {
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+}
+
+/* Change color of dropdown links on hover */
+.dropdown-content a:hover {background-color: #ddd;}
+
+/* Show the dropdown menu on hover */
+.dropdown:hover .dropdown-content {display: block;}
+
 </style>
 {% endblock %}
 
@@ -88,7 +127,20 @@
       <ul class="nav navbar-nav navbar-right">
         {% block nav_bar_options %}
           <!-- <li><a href="/">Inicio</a></li> -->
-          <li><a href="/mapa">Verificar Mapa</a></li>
+
+          <li>
+            <div class="dropdown">
+              <a class="navbar-brand">Opções</a>
+              <div class="dropdown-content">
+                <a href="#">Pesquisar leituras</a>
+                <a href="#">Documentação</a>
+                <a href="#">Sobre</a>
+                <a href="https://github.com/Mathe13/rodoviasApp"  target="_blank">Ver app no Github</a>
+                <a href="https://github.com/Mathe13/rodoviasApi"  target="_blank">Ver api no Github</a>
+
+              </div>
+            </div>
+          </li>
         {% endblock %}
       </ul>
     </div>
@@ -119,7 +171,7 @@
 
 </footer>
 
-</body>
-</html>
 {% block script%}
 {% endblock %}
+</body>
+</html>

@@ -13,7 +13,9 @@ router.get("/", function (req, res) {
             res.status(200).json(rows)
         })
         .catch(err => {
-            res.status(500).json({ "error": String(err) })
+            res.status(500).json({
+                "error": String(err)
+            })
         })
 })
 
@@ -22,7 +24,9 @@ router.post("/", function (req, res) {
         console.log("cadastrou")
         res.status(200).json(rows)
     }).catch(err => {
-        res.status(203).json({ "erro": String(err) })
+        res.status(203).json({
+            "erro": String(err)
+        })
     })
 })
 
@@ -31,7 +35,9 @@ router.put("/", function (req, res) {
         console.log("atualizou")
         res.status(200).json(rows)
     }).catch(err => {
-        res.status(500).json({ "erro": String(err) })
+        res.status(500).json({
+            "erro": String(err)
+        })
     })
 })
 

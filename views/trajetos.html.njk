@@ -1,0 +1,106 @@
+{% extends "base.html.njk" %}
+{% block title %}
+Busca de lituras
+{% endblock %}
+{% block style%}
+{{super()}}
+{% endblock %}
+{% block body %}
+
+<div class="container-fluid bg-1 text-center" style="color: #00000091;padding-left:10%;padding-right:10%;">
+    <h3>
+        Exibição de leituras
+    </h3>
+    <div class="row">
+        <div id="div-form" style="margin-top: 15px;padding: 10px;">
+
+            <form>
+                <div class="col-md-4 col-md-offset-4">
+                    <div class="row">
+
+                        <div class="form-group form-inline">
+                            <label for="select"></label>Filtrar por:</label>
+                            <select class="form-control" onchange="change_pergunta()" id="select">
+                                <option value="data">Data:</option>
+                                <option value="user">Usuario:</option>
+                                <option value="rodovia">Rodovia</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-10 col-md-offset-1">
+                    <div class="row" id="pergunta">
+                        <div class="form-group " id="data" style="display:inline">
+                            <div class="row">
+                                <div class="col-md-5 col-md-offset-1">
+                                    <label for="data_inicio"></label>Data Inicial:</label>
+                                    <input type="date" class="form-control" id="data_inicio">
+                                </div>
+                                <div class="col-md-5">
+                                    <label for="data_fim"></label>Data Final:</label>
+                                    <input type="date" class="form-control" id="data_fim">
+                                </div>
+                            </div>
+                            <div class="row" style="margin-top: 20px">
+                                <div class="col-md-6 col-md-offset-3">
+                                    <button type="button" onclick="buscaData()" class="btn btn-success btn-lg btn-block">Filtrar</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group form-inline " id=user style="display:none">
+                            <div class="row">
+                                <label for="nome"></label>Nome:</label>
+                                <input type="text" class="form-control" id="nome">
+                            </div>
+                            <div class="row" style="margin-top: 20px">
+                                <div class="col-md-6 col-md-offset-3">
+                                    <button type="button" class="btn btn-success btn-lg btn-block">Filtrar</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group form-inline " id=rodovia style="display:none">
+                            <div class="row">
+                                <label for="rodovia"></label>Nome Da rodovia:</label>
+                                <input type="text" class="form-control" id="rodovia">
+                            </div>
+                            <div class="row" style="margin-top: 20px">
+                                <div class="col-md-6 col-md-offset-3">
+                                    <button type="button" class="btn btn-success btn-lg btn-block">Filtrar</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+    </div>
+</div>
+{% endblock%}
+{% block script %}
+<script>
+    var divs_filtro = ['data', 'user', 'rodovia']
+
+    function change_pergunta() {
+        var id = document.getElementById('select').value;
+        console.log(id)
+         for (var i = 0; i < divs_filtro.length; i++) {
+             document.getElementById(divs_filtro[i]).style.display = "none";
+         }
+         document.getElementById(id).style.display = "inline";
+    } 
+    function buscaData(){
+        var data_inicio=document.getElementById('data_inicio').value;
+        var data_fim=document.getElementById('data_fim').value;
+        var condicoes = ''
+        if(data_inicio){
+            condicoes +='target[]=recebido&target_value[]='+(new Date(data_inicio)).toISOString()+'&target_operator=>'
+        }
+        if(data_fim){
+            condicoes +='&target[]=recebido&target_value[]='+(new Date(data_fim)).toISOString()+'&target_operator=<'
+        }
+       var url = base_url+'path?'+condicoes
+       console.log(url)
+    }
+    </script> 
+    {% endblock %}

@@ -49,6 +49,9 @@ class Trajeto {
                                     lat: path.gps[path.gps.length - 1].lat,
                                     lng: path.gps[path.gps.length - 1].lng
                                 })
+                                console.log(path.acelerometro[path.acelerometro.length - 1].datahora)
+                                console.log(path.acelerometro[0].datahora)
+                                path['tempo'] = Math.abs(new Date(path.acelerometro[path.acelerometro.length - 1].datahora) - new Date(path.acelerometro[0].datahora)) / (60 * 1000)
                                 resolve(paths)
                             })
                         })
