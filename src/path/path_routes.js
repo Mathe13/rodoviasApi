@@ -21,6 +21,8 @@ router.get("/", function (req, res) {
         })
 })
 
+
+
 router.get('/map/:id', function (req, res) {
     res.render('path_mapa.html.njk', {
         id: req.params.id
@@ -97,6 +99,18 @@ router.post("/", function (req, res) {
 
 router.put("/", function (req, res) {
     path.update(req.body)
+})
+
+router.get('/:nome', function (req, res) {
+    path.select_by_name(req.params.nome)
+        .then((rows, fields) => {
+            res.status(200).json(rows)
+        })
+        .catch(err => {
+            res.status(500).json({
+                "error": String(err)
+            })
+        })
 })
 
 module.exports = router

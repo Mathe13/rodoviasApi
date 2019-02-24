@@ -64,7 +64,11 @@ class sqlUtils {
         targets.forEach(target => {
             if (result == "") {
                 if (target.operator) {
-                    result = " " + target.name + " " + target.operator + " '" + target.value + "'"
+                    if (target.operator == 'like' || target.operator == 'LIKE') {
+                        result = " " + target.name + " " + target.operator + " '%" + target.value + "%'"
+                    } else {
+                        result = " " + target.name + " " + target.operator + " '" + target.value + "'"
+                    }
                 } else {
                     result = " " + target.name + " = '" + target.value + "'"
                 }

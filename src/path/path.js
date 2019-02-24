@@ -18,30 +18,24 @@ class Trajeto {
     }
 
     static full_select(targets) {
-        //busca trajetos
         const utils = require('../../utils/misc_utils.js');
         console.log('recebi', targets)
         return new Promise(function (resolve, reject) {
             sql_op.select(null, targets, table).then((rows, fields) => {
                 let paths = rows
-                //busca leituras
                 paths.forEach(path => {
-                    //busca gps
                     targets = [{
                         'name': 'trajeto_id',
                         'value': path.id
                     }]
                     sql_op.select(null, targets, 'gps').then((rows2, fields) => {
                         path.gps = rows2
-                        // console.log(rows2)
-                        //busca giroscopio
+
                         sql_op.select(null, targets, 'giroscopio').then((rows3, fields) => {
                             path.giroscopio = rows3
-                            // console.log(rows3)
-                            //busca acelerometro
+
                             sql_op.select(null, targets, 'acelerometro').then((rows4, fields) => {
                                 path.acelerometro = rows4
-                                // console.log(rows4)
                                 path['distancia_percorrida'] = utils.getHaversineDistance({
                                     lat: path.gps[0].lat,
                                     lng: path.gps[0].lng
@@ -68,19 +62,22 @@ class Trajeto {
     }
 
 
+    static select_by_name(nome) {
+        var con = require("../../services/mysql_db.js")
+        var sql = 'select t.* from trajeto t where (select u.nome from user u  where u.id=t.user_id) like "%' + nome + '%"'
+        return new Promise(function (resolve, reject) {
+            // Do async job
+            con.query(sql, function (err, rows, fields) {
+                if (err) {
+                    reject(err);
+                } else {
+                    resolve(rows, fields);
+                }
+            })
+        })
+    }
+
     static update(data) {
-        // if (data.recebido) {
-        //     data.recebido = (fecha.format(data.recebido, 'YYYY-MM-DD HH:mm:ss'))
-        // }
-        // if (data.hora_inicio) {
-        //     data.hora_inicio = (fecha.format(data.hora_inicio, 'YYYY-MM-DD HH:mm:ss'))
-        // }
-        // if (data.hora_fim) {
-        //     data.hora_fim = (fecha.format(data.hora_fim, 'YYYY-MM-DD HH:mm:ss'))
-        // }
-        // if (data.enviado) {
-        //     data.enviado = (fecha.format(data.enviado, 'YYYY-MM-DD HH:mm:ss'))
-        // }
         return sql_op.update(data, table)
     }
 

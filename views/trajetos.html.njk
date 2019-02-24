@@ -50,22 +50,22 @@ Busca de lituras
                         <div class="form-group form-inline " id=user style="display:none">
                             <div class="row">
                                 <label for="nome"></label>Nome:</label>
-                                <input type="text" class="form-control" id="nome">
+                                <input type="text" class="form-control" id="nome_input">
                             </div>
                             <div class="row" style="margin-top: 20px">
                                 <div class="col-md-6 col-md-offset-3">
-                                    <button type="button" class="btn btn-success btn-lg btn-block">Filtrar</button>
+                                    <button type="button" onclick="buscaNome()" class="btn btn-success btn-lg btn-block">Filtrar</button>
                                 </div>
                             </div>
                         </div>
                         <div class="form-group form-inline " id=rodovia style="display:none">
                             <div class="row">
                                 <label for="rodovia"></label>Nome Da rodovia:</label>
-                                <input type="text" class="form-control" id="rodovia">
+                                <input type="text" class="form-control" id="rodovia_input">
                             </div>
                             <div class="row" style="margin-top: 20px">
                                 <div class="col-md-6 col-md-offset-3">
-                                    <button type="button" class="btn btn-success btn-lg btn-block">Filtrar</button>
+                                    <button type="button" onclick="buscaRodovia()" class="btn btn-success btn-lg btn-block">Filtrar</button>
                                 </div>
                             </div>
                         </div>
@@ -101,6 +101,17 @@ Busca de lituras
         }
        var url = base_url+'path?'+condicoes
        console.log(url)
+    }
+    function buscaNome(){
+        var nome=document.getElementById('nome_input').value
+        var url = base_url+'path/'+nome
+        console.log(url)
+
+    }
+    function buscaRodovia(){
+        var rodovia= document.getElementById('rodovia_input').value
+        var url=base_url+'path/?target[]=nome_rodovia&target_value[]='+rodovia+'&target_operator[]=LIKE'
+        console.log(url)
     }
     </script> 
     {% endblock %}
