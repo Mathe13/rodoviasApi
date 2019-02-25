@@ -55,8 +55,9 @@ table.minimalistBlack tfoot td {
                         <div class="form-group form-inline">
                             <label for="select"></label>Filtrar por:</label>
                             <select class="form-control" onchange="change_pergunta()" id="select">
-                                <option value="data">Data:</option>
-                                <option value="user">Usuario:</option>
+                                <option value="data">Data</option>
+                                <option value="user">Usuario</option>
+                                <option value="Id">Id</option>
                                 <option value="rodovia">Rodovia</option>
                             </select>
                         </div>
@@ -81,7 +82,7 @@ table.minimalistBlack tfoot td {
                                 </div>
                             </div>
                         </div>
-                        <div class="form-group form-inline " id=user style="display:none">
+                        <div class="form-group form-inline " id="user" style="display:none">
                             <div class="row">
                                 <label for="nome"></label>Nome:</label>
                                 <input type="text" class="form-control" id="nome_input">
@@ -89,6 +90,17 @@ table.minimalistBlack tfoot td {
                             <div class="row" style="margin-top: 20px">
                                 <div class="col-md-6 col-md-offset-3">
                                     <button type="button" onclick="buscaNome()" class="btn btn-success btn-lg btn-block">Filtrar</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group form-inline " id="Id" style="display:none">
+                            <div class="row">
+                                <label for="id_input"></label>Id:</label>
+                                <input type="text" class="form-control" id="id_input">
+                            </div>
+                            <div class="row" style="margin-top: 20px">
+                                <div class="col-md-6 col-md-offset-3">
+                                    <button type="button" onclick="buscaID()" class="btn btn-success btn-lg btn-block">Filtrar</button>
                                 </div>
                             </div>
                         </div>
@@ -135,7 +147,7 @@ table.minimalistBlack tfoot td {
 {% endblock%}
 {% block script %}
 <script>
-    var divs_filtro = ['data', 'user', 'rodovia']
+    var divs_filtro = ['data', 'user', 'rodovia','Id']
 
     function change_pergunta() {
         var id = document.getElementById('select').value;
@@ -158,6 +170,12 @@ table.minimalistBlack tfoot td {
          var url = base_url+'path?'+condicoes
          console.log(url)
          atualiza(url)
+    }
+    function buscaID(){
+        var id=document.getElementById('id_input').value
+        var url=base_url+'path/?target[]=id&target_value[]='+id+'&target_operator[]=LIKE'
+        console.log(url)
+        atualiza(url)
     }
     function buscaNome(){
         var nome=document.getElementById('nome_input').value

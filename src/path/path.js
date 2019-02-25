@@ -23,38 +23,41 @@ class Trajeto {
         return new Promise(function (resolve, reject) {
             sql_op.select(null, targets, table).then((rows, fields) => {
                 let paths = rows
-                paths.forEach(path => {
+                let cont = 0;
+                paths.forEach(async (path) => {
+                    cont++;
                     targets = [{
                         'name': 'trajeto_id',
                         'value': path.id
                     }]
-                    sql_op.select(null, targets, 'gps').then((rows2, fields) => {
-                        path.gps = rows2
-
-                        sql_op.select(null, targets, 'giroscopio').then((rows3, fields) => {
-                            path.giroscopio = rows3
-
-                            sql_op.select(null, targets, 'acelerometro').then((rows4, fields) => {
-                                path.acelerometro = rows4
-                                path['distancia_percorrida'] = utils.getHaversineDistance({
-                                    lat: path.gps[0].lat,
-                                    lng: path.gps[0].lng
-                                }, {
-                                    lat: path.gps[path.gps.length - 1].lat,
-                                    lng: path.gps[path.gps.length - 1].lng
-                                })
-                                console.log(path.acelerometro[path.acelerometro.length - 1].datahora)
-                                console.log(path.acelerometro[0].datahora)
-                                path['tempo'] = Math.abs(new Date(path.acelerometro[path.acelerometro.length - 1].datahora) - new Date(path.acelerometro[0].datahora)) / (60 * 1000)
-                                resolve(paths)
-                            })
+                    try {
+                        path.gps = await sql_op.select(null, targets, 'gps')
+                        path.giroscopio = await sql_op.select(null, targets, 'giroscopio')
+                        path.acelerometro = await sql_op.select(null, targets, 'acelerometro')
+                        path['distancia_percorrida'] = utils.getHaversineDistance({
+                            lat: path.gps[0].lat,
+                            lng: path.gps[0].lng
+                        }, {
+                            lat: path.gps[path.gps.length - 1].lat,
+                            lng: path.gps[path.gps.length - 1].lng
                         })
-                    })
-                });
+                        console.log(path.acelerometro[path.acelerometro.length - 1].datahora)
+                        console.log(path.acelerometro[0].datahora)
+                        path['tempo'] = Math.abs(new Date(path.acelerometro[path.acelerometro.length - 1].datahora) - new Date(path.acelerometro[0].datahora)) / (60 * 1000)
+                        if (cont == paths.length) {
+                            resolve(paths)
+                        }
+                    } catch (error) {
+                        console.log(error)
+                        reject(error)
+                    }
 
-            }).catch(err => reject(err))
-        })
+                })
+            });
+
+        }).catch(err => reject(err))
     }
+
 
 
     static insert(data) {
