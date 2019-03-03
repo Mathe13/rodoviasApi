@@ -52,19 +52,19 @@ router.get("/tipo_veiculo", function (req, res) {
         })
 })
 
-router.get("/detalhes", function (req, res) {
-    req_data = utils.process_req(req.query);
-    console.log(req_data)
-    path.full_select(req_data.targets)
-        .then((rows, fields) => {
-            res.status(200).json(rows)
-        })
-        .catch(err => {
-            res.status(500).json({
-                "error": String(err)
-            })
-        })
-})
+// router.get("/detalhes", function (req, res) {
+//     req_data = utils.process_req(req.query);
+//     console.log(req_data)
+//     path.full_select(req_data.targets)
+//         .then((rows, fields) => {
+//             res.status(200).json(rows)
+//         })
+//         .catch(err => {
+//             res.status(500).json({
+//                 "error": String(err)
+//             })
+//         })
+// })
 
 router.get("/detalhes/:id", function (req, res) {
     let targets = [{
@@ -76,6 +76,18 @@ router.get("/detalhes/:id", function (req, res) {
             res.status(200).json(rows)
         })
         .catch(err => {
+            res.status(500).json({
+                "error": String(err)
+            })
+        })
+})
+router.get("/resumo/:id", function (req, res) {
+    path.resumo(req.params.id)
+        .then((rows, fields) => {
+            res.status(200).json(rows)
+        })
+        .catch(err => {
+            console.log(err)
             res.status(500).json({
                 "error": String(err)
             })

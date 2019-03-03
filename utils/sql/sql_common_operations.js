@@ -3,6 +3,9 @@ const sqlUtils = require("./sql_utils.js")
 class sql_common {
 
     /**
+     * Realiza um consulta na tabela indicada usando o objeto targets para gerar o where 
+     * e o objeto fields para listar os campos, quando os valores são omitidos 
+     * é gerado um select * from ___ 
      * @param {string} fields[] campos a serem consultados
      * @param {object} target[] array de obejetos que conte nome do campo (name) e valor a ser consultado(value)
      * @returns {Promise}  que vai resolver em rows e fields   
@@ -28,8 +31,10 @@ class sql_common {
     }
 
     /**
-     * 
-     * @param {object} data contem os pares de campo e valor 
+     * Realiza um insert na tabela indicada, utilizando o objeto data para gerar a query,
+     * note que é necessario que as chave do objeto sejam iguais aos nomes dos campos da tabela
+     * que se deseja inserir
+     * @param {object} data contem os pares de campo e valor como chave e campo
      * @returns {Promise}  que vai resolver em rows e fields
      */
     static insert(data, table) {
@@ -48,7 +53,9 @@ class sql_common {
         })
     }
     /**
-     * 
+     * Realiza um update na tabela indicada, utilizando o objeto data para gerar a query,
+     * note que é necessario que as chave do objeto sejam iguais aos nomes dos campos da tabela *
+     * que se deseja atualizar
      * @param {object} data contem os pares de campo e valor 
      * @returns {Promise}  que vai resolver em rows e fields
      */

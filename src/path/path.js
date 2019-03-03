@@ -13,46 +13,70 @@ class Trajeto {
         return sql_op.select(fields, targets, table)
     }
 
+    static resumo(id) {
+        var con = require("../../services/mysql_db.js")
+        const sql = `select p.*, count(a.id) as leituras_realizadas, (max(a.datahora)) as ultima_data,
+        (min(a.datahora)) as primeira_data from trajeto p 
+        join acelerometro a on a.trajeto_id=p.id where p.id=${id}`
+
+        return new Promise(function (resolve, reject) {
+            // Do async job
+            con.query(sql, function (err, rows, fields) {
+                if (err) {
+                    reject(err);
+                } else {
+                    // console.log((Math.abs(new Date(rows[0].ultima_data) - new Date(rows[0].primeira_data)) / (60 * 1000)))
+                    rows[0]['tempo'] = (Math.abs(new Date(rows[0].ultima_data) - new Date(rows[0].primeira_data)) / (60 * 1000))
+                    rows[0]['leituras previstas'] = ((rows[0].tempo * 60) / (rows[0].espacamento / rows[0].velocidade))
+                    resolve(rows);
+                }
+            })
+        })
+
+    }
     static select_veiculos() {
         return sql_op.select(null, null, 'tipo_veiculo')
     }
-
     static full_select(targets) {
         const utils = require('../../utils/misc_utils.js');
         console.log('recebi', targets)
         return new Promise(function (resolve, reject) {
-            sql_op.select(null, targets, table).then((rows, fields) => {
-                let paths = rows
-                let cont = 0;
-                paths.forEach(async (path) => {
-                    cont++;
-                    targets = [{
-                        'name': 'trajeto_id',
-                        'value': path.id
-                    }]
-                    try {
-                        path.gps = await sql_op.select(null, targets, 'gps')
-                        path.giroscopio = await sql_op.select(null, targets, 'giroscopio')
-                        path.acelerometro = await sql_op.select(null, targets, 'acelerometro')
-                        path['distancia_percorrida'] = utils.getHaversineDistance({
-                            lat: path.gps[0].lat,
-                            lng: path.gps[0].lng
-                        }, {
-                            lat: path.gps[path.gps.length - 1].lat,
-                            lng: path.gps[path.gps.length - 1].lng
-                        })
-                        console.log(path.acelerometro[path.acelerometro.length - 1].datahora)
-                        console.log(path.acelerometro[0].datahora)
-                        path['tempo'] = Math.abs(new Date(path.acelerometro[path.acelerometro.length - 1].datahora) - new Date(path.acelerometro[0].datahora)) / (60 * 1000)
-                        if (cont == paths.length) {
-                            resolve(paths)
-                        }
-                    } catch (error) {
-                        console.log(error)
-                        reject(error)
-                    }
+            sql_op.select(null, targets, table).then(async (rows, fields) => {
+                let path = rows[0]
+                targets = [{
+                    'name': 'trajeto_id',
+                    'value': path.id
+                }]
+                try {
+                    const promessas = [
+                        sql_op.select(null, targets, 'gps'),
+                        sql_op.select(null, targets, 'giroscopio'),
+                        sql_op.select(null, targets, 'acelerometro'),
+                    ];
 
-                })
+                    const [gps, giroscopio, acelerometro] = await Promise.all(promessas);
+
+                    path.gps = gps;
+                    path.giroscopio = giroscopio;
+                    path.acelerometro = acelerometro;
+                    path['tempo'] = (Math.abs(new Date(path.acelerometro[path.acelerometro.length - 1].datahora) - new Date(path.acelerometro[0].datahora)) / (60 * 1000))
+                    path['leituras previstas'] = ((path.tempo * 60) / (path.espacamento / path.velocidade))
+                    path['distancia_percorrida'] = utils.getHaversineDistance({
+                        lat: path.gps[0].lat,
+                        lng: path.gps[0].lng
+                    }, {
+                        lat: path.gps[path.gps.length - 1].lat,
+                        lng: path.gps[path.gps.length - 1].lng
+                    })
+                    console.log(path.acelerometro[path.acelerometro.length - 1].datahora)
+                    console.log(path.acelerometro[0].datahora)
+                    resolve(path)
+                } catch (error) {
+                    console.log(error)
+                    reject(error)
+                }
+
+
             });
 
         }).catch(err => reject(err))

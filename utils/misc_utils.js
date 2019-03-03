@@ -30,6 +30,13 @@ class Utils {
         return day + "-" + (new Date()).getFullYear()
     }
 
+    /**
+     * 
+     * @param {lat:string,lng:string} firstLocation  contem latitude e longitude da primeira localização
+     * @param {lat: string,lng: string} secondLocation contem latitude e longitude da primeira localização
+     * @returns a distancia em km entre as duas localizações
+     * 
+     */
     static getHaversineDistance(firstLocation, secondLocation) {
         const earthRadius = 6371; // km 
 
@@ -47,6 +54,12 @@ class Utils {
         return distance;
     }
 
+    /**
+     * Processa o obejeto de requisição e retornar um obejeto com doi vetores formatados
+     * @param {Object} req o objeto de requisição padrão do express
+     * @returns {Object} objetor que contem o vetor fields e o vetor targets, serve para ser usado nas funções do sql_utils
+     * 
+     */
     static process_req(req) {
         var fields = null;
         var target = null;

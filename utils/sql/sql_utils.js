@@ -2,9 +2,11 @@ const utils = require("../misc_utils.js")
 class sqlUtils {
 
     /**
+     * Função que gera um query de select para ser utilizada pelo modulo mysql ou pelo sql_common_operation
      * @param {object} targets[] array de obejetos que conte nome do campo (name) e valor a ser consultado(value)
      * @param {string} target_table nome da tabela alvo
      * @param { string } fields[] campos a serem consultados
+     * @returns {string} a clausula de select na tabela
      **/
     static generate_select_query(targets, fields, target_table) {
         var sql_fields = "*"
@@ -21,9 +23,11 @@ class sqlUtils {
         return sql
     }
     /**
-     * 
+     * Função que gera um query de insert para ser utilizada pelo modulo mysql ou pelo sql_common_operation
      * @param {object} data objeto que contem os pares de valor e chave(iguais aos do banco)
      * @param {string} target_table nome da tabela alvo 
+     * @returns {string} a clausula de insert na tabela
+     * 
      */
     static generate_insert_query(data, target_table) {
         var decomposed = utils.objec_decompose(data)
@@ -33,9 +37,11 @@ class sqlUtils {
     }
 
     /**
-     * 
+     * Função que gera um query de update para ser utilizada pelo modulo mysql ou pelo sql_common_operation
      * @param {object} data objeto que contem os pares de valor e chave(iguais aos do banco)
      * @param {string} target_table nome da tabela alvo 
+     * @returns {string} a query de atualização da tabela
+     * 
      */
     static generate_update_query(data, target_table) {
         var valor_chave = ""
@@ -55,8 +61,10 @@ class sqlUtils {
 
 
     /**
-     * @param {object} targets[] array de obejetos que conte nome do campo (name) e valor a ser consultado(value)
-     * @returns {string} a parte do where
+     * Função que gera um where para ser utilizada pelas demais funções desse modulo 
+     * @param {object} targets[] array de obejetos que conte nome do campo (name), valor a ser consultado(value) e operador(operator)
+     * @returns {string} uma string que contem o 'where' que será utilizado no mysql
+     * 
      **/
     static generate_where(targets) {
         var result = ""
@@ -87,7 +95,9 @@ class sqlUtils {
 
 
     /** 
+     * Função que gera a listagem de fields para ser utilizada pelas demais funções desse modulo
      * @param { string } fields[] campos a serem consultados
+     * 
      */
     static generate_field_list(fields, aspas = false) {
         var result = ""
