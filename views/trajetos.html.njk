@@ -132,6 +132,7 @@ table.minimalistBlack tfoot td {
                         <th>Data</th>
                         <th>Velocidade</th>
                         <th>espacamento</th>
+                        <th>Resumo Do trajeto</th>
                         <th>Detalhes Do trajeto</th>
                         <th>Gráficos</th>
                         <th>Mapa</th>
@@ -207,7 +208,10 @@ table.minimalistBlack tfoot td {
                     <td>${path.velocidade}</td>
                     <td>${path.espacamento}</td>
                     <td>
-                        <a href="/path/detalhes/${path.id}" target="_blank" type="button" class="btn btn-primary">Detalhes</a>
+                        <a href="/path/resumo/${path.id}" target="_blank" type="button" class="btn btn-primary">Resumo do trajeto</a>
+                    </td>
+                    <td>
+                        <a href="/path/detalhes/${path.id}" target="_blank" type="button" class="btn btn-primary">Detalhes do trajeto</a>
                     </td>
                     <td>
                         <a href="/path/graph/${path.id}" target="_blank" type="button" class="btn btn-primary">Gráficos</a>
