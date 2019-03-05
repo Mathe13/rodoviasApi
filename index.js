@@ -27,6 +27,9 @@ var errorLogStream = fs.createWriteStream('./error', {
 const app = express();
 app.disable('x-powered-by');
 
+//configura o segredo
+app.set('secret', config.secret)
+
 //configura a template engine nunjucks, que será usada nos arquivos da view
 nunjucks.configure('views', {
     autoescape: true,
