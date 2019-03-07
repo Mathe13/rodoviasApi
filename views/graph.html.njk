@@ -33,7 +33,6 @@ function preparaDados(id){
     fetch(url)
         .then(res => res.json())
             .then((path) => {
-                    path=path[0]
                     console.log('path:',path)
                     var dados = organizarDados(path)
                     gera_graficos(dados,{velocidade:path.velocidade,espacamento:path.espacamento})
