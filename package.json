@@ -5,7 +5,9 @@
   "main": "index.js",
   "scripts": {
     "test": "nodemon index.js",
-    "start": "forever index.js"
+    "start": "forever index.js",
+    "debug": "node inspect app.js",
+    "start-log": "forever -o log index.js"
   },
   "repository": {
     "type": "git",
