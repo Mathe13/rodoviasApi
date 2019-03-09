@@ -3,41 +3,20 @@
 Busca de leituras
 {% endblock %}
 {% block style%}
-table.minimalistBlack {
-  border: 3px solid #000000;
-  width: 100%;
-  text-align: left;
-  border-collapse: collapse;
-}
-table.minimalistBlack td, table.minimalistBlack th {
-  border: 1px solid #000000;
-  padding: 5px 4px;
-}
-table.minimalistBlack tbody td {
-  font-size: 13px;
-}
-table.minimalistBlack thead {
-  background: #CFCFCF;
-  background: -moz-linear-gradient(top, #dbdbdb 0%, #d3d3d3 66%, #CFCFCF 100%);
-  background: -webkit-linear-gradient(top, #dbdbdb 0%, #d3d3d3 66%, #CFCFCF 100%);
-  background: linear-gradient(to bottom, #dbdbdb 0%, #d3d3d3 66%, #CFCFCF 100%);
-  border-bottom: 3px solid #000000;
-}
-table.minimalistBlack thead th {
-  font-size: 15px;
-  font-weight: bold;
-  color: #000000;
-  text-align: left;
-}
-table.minimalistBlack tfoot {
-  font-size: 14px;
-  font-weight: bold;
-  color: #000000;
-  border-top: 3px solid #000000;
-}
-table.minimalistBlack tfoot td {
-  font-size: 14px;
-}
+{# table{
+    box-sizing: content-box;
+    width: 100%;
+    margin: 0 auto;
+    clear: both;
+    border-collapse: separate;
+    border-spacing: 0;
+    border-collapse: collapse;
+    border-spacing: 0;
+    display: table;
+    border-collapse: separate;
+    border-spacing: 2px;
+    border-color: grey;
+} #}
 {{super()}}
 {% endblock %}
 {% block body %}
@@ -120,9 +99,10 @@ table.minimalistBlack tfoot td {
             </form>
         </div>
         <br>
-        <div id="tabelaX" class="row" style="display:none">
-            <div style="overflow-x:auto;display: inline;">
-            <table style="width:100%" class="minimalistBlack">
+        <div id="tabelaX"  style="display:none" >
+        <div class="dataTables_wrapper" style="overflow: scroll">
+
+            <table class="table table-striped compact table-bordered table-hover table-responsive " id="example" style="width:100%">
                 <thead>
 
                     <tr>
@@ -138,6 +118,7 @@ table.minimalistBlack tfoot td {
                         <th>Mapa</th>
                     </tr>
                 </thead>
+
                 <tbody id="corpo-tabela">
                 </tbody>
                
@@ -148,6 +129,7 @@ table.minimalistBlack tfoot td {
 {% endblock%}
 {% block script %}
 <script>
+
     var divs_filtro = ['data', 'user', 'rodovia','Id']
 
     function change_pergunta() {
@@ -226,6 +208,8 @@ table.minimalistBlack tfoot td {
             })
             document.getElementById('corpo-tabela').innerHTML=conteudo
             document.getElementById('tabelaX').style.display = "inline";
+            $('#example').DataTable();
+
          })
          .catch(err => { throw err });
     }
