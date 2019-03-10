@@ -21,7 +21,8 @@ Busca de leituras
 {% endblock %}
 {% block body %}
 
-<div class="container-fluid bg-1 text-center" style="color: #00000091;padding-left:10%;padding-right:10%;">
+<div class="container-fluid bg-1 text-center" >
+<div style="color: #00000091;padding-left:10%;padding-right:10%;">
     <h3>
         Exibição de leituras
     </h3>
@@ -98,13 +99,13 @@ Busca de leituras
                 </div>
             </form>
         </div>
+        </div>
+
         <br>
-        <div id="tabelaX"  style="display:none" >
-        <div class="dataTables_wrapper" style="overflow: scroll">
-
-            <table class="table table-striped compact table-bordered table-hover table-responsive " id="example" style="width:100%">
+        <div id="tabelaX"  style="display:none">
+        <div class="dataTables_wrapper" style="overflow: scroll;color: #000000!important">
+            <table class="table table-striped compact table-bordered table-hover table-responsive " id="example" style="width:80%">
                 <thead>
-
                     <tr>
                         <th>Id</th>
                         <th>Id Usuário</th> 
@@ -125,7 +126,7 @@ Busca de leituras
             </table>
         </div>
 </div>
-    </div>
+</div>
 {% endblock%}
 {% block script %}
 <script>
