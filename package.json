@@ -31,7 +31,7 @@
   },
   "homepage": "https://github.com/Mathe13/rodoviasApi#readme",
   "dependencies": {
-    "bcrypt": "^3.0.4",
+    "bcrypt": "^5.0.0",
     "body-parser": "^1.18.3",
     "express": "^4.16.4",
     "fecha": "^3.0.2",
